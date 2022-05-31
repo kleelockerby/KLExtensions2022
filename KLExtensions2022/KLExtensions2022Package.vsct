@@ -1,0 +1,204 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CommandTable xmlns="http://schemas.microsoft.com/VisualStudio/2005-10-18/CommandTable" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <Extern href="stdidcmd.h"/>
+  <Extern href="vsshlids.h"/>
+
+  <Commands package="guidPackage">
+    <Menus>
+      <Menu guid="guidPackageCmdSet" id="KLExtensionsMenu" priority="0x700" type="Menu">
+        <Parent guid="guidSHLMainMenu" id="IDG_VS_MM_TOOLSADDINS" />
+        <Strings>
+          <ButtonText>KL Extensions</ButtonText>
+        </Strings>
+      </Menu>
+      <Menu guid="guidPackageSurroundWithCmdSet" id="SurroundWithSubMenu" priority="0x0100" type="Menu">
+        <Parent guid="guidPackageSurroundWithCmdSet" id="SurroundWithMenuGroup" />
+        <Strings>
+          <ButtonText>Surround With</ButtonText>
+        </Strings>
+      </Menu>
+      <Menu guid="guidPackageEditContextCmdSet" id="EditSubMenu" priority="0x0101" type="Menu">
+        <Parent guid="guidPackageEditContextCmdSet" id="EditMenuGroup" />
+        <Strings>
+          <ButtonText>Edit</ButtonText>
+        </Strings>
+      </Menu>
+    </Menus>
+
+    <Groups>
+      <Group guid="guidPackageCmdSet" id="KLExtensionsMenuGroup" priority="0x0600">
+        <Parent guid="guidPackageCmdSet" id="KLExtensionsMenu" />
+      </Group>
+      <Group guid="guidPackageSurroundWithCmdSet" id="SurroundWithMenuGroup" priority="0x0600">
+        <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_CODEWIN" />
+      </Group>
+      <Group guid="guidPackageSurroundWithCmdSet" id="SurroundWithItemsMenuGroup" priority="0x0600">
+        <Parent guid="guidPackageSurroundWithCmdSet" id="SurroundWithSubMenu" />
+      </Group>
+      <Group guid="guidPackageEditContextCmdSet" id="EditMenuGroup" priority="0x0600">
+        <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_CODEWIN" />
+      </Group>
+      <Group guid="guidPackageEditContextCmdSet" id="EditItemsMenuGroup" priority="0x0600">
+        <Parent guid="guidPackageEditContextCmdSet" id="EditSubMenu" />
+      </Group>
+    </Groups>
+
+    <Buttons>
+      <Button guid="guidPackageCmdSet" id="RemoveCommentCommandId" priority="0x0000" type="Button">
+        <Parent guid="guidPackageCmdSet" id="KLExtensionsMenuGroup" />
+        <Icon guid="guidImages" id="bmpPic2" />
+        <Strings>
+          <CommandName>RemoveCommentCommandId</CommandName>
+          <ButtonText>Remove Comments</ButtonText>
+        </Strings>
+      </Button>
+      <Button guid="guidPackageCmdSet" id="RemoveRegionsCommandId" priority="0x0100" type="Button">
+        <Parent guid="guidPackageCmdSet" id="KLExtensionsMenuGroup" />
+        <Icon guid="guidImages" id="bmpPic3" />
+        <Strings>
+          <CommandName>RemoveRegionsCommandId</CommandName>
+          <ButtonText>Remove Regions</ButtonText>
+        </Strings>
+      </Button>
+      <Button guid="guidPackageSurroundWithCmdSet" id="SurroundWithBraceCommandId" priority="0x0100" type="Button">
+        <Parent guid="guidPackageSurroundWithCmdSet" id="SurroundWithItemsMenuGroup" />
+        <Icon guid="guidImages" id="bmpPic5" />
+        <Strings>
+          <CommandName>SurroundWithBraceCommandId</CommandName>
+          <ButtonText>Braces {}</ButtonText>
+        </Strings>
+      </Button>
+      <Button guid="guidPackageSurroundWithCmdSet" id="SurroundWithParenthesisCommandId" priority="0x0101" type="Button">
+        <Parent guid="guidPackageSurroundWithCmdSet" id="SurroundWithItemsMenuGroup" />
+        <Icon guid="guidImages" id="bmpPic6" />
+        <Strings>
+          <CommandName>SurroundWithParenthesisCommandId</CommandName>
+          <ButtonText>Paranthesis ()</ButtonText>
+        </Strings>
+      </Button>
+      <Button guid="guidPackageSurroundWithCmdSet" id="SurroundWithDoubleQuotesCommandId" priority="0x0102" type="Button">
+        <Parent guid="guidPackageSurroundWithCmdSet" id="SurroundWithItemsMenuGroup" />
+        <Icon guid="guidImages" id="bmpPic4" />
+        <Strings>
+          <CommandName>SurroundWithDoubleQuotesCommandId</CommandName>
+          <ButtonText>Double Quotes ""</ButtonText>
+        </Strings>
+      </Button>
+      <Button guid="guidPackageEditContextCmdSet" id="EditJoinLinesCommandId" priority="0x0102" type="Button">
+        <Parent guid="guidPackageEditContextCmdSet" id="EditItemsMenuGroup" />
+        <Icon guid="guidImages2" id="bmpPic7" />
+        <Strings>
+          <CommandName>EditJoinLinesCommandId</CommandName>
+          <ButtonText>Join Multiline</ButtonText>
+        </Strings>
+      </Button>
+      <Button guid="guidPackageEditContextCmdSet" id="EditTitleCaseCommandId" priority="0x0102" type="Button">
+        <Parent guid="guidPackageEditContextCmdSet" id="EditItemsMenuGroup" />
+        <Strings>
+          <CommandName>EditTitleCaseCommand</CommandName>
+          <ButtonText>Change to TitleCase</ButtonText>
+        </Strings>
+      </Button>
+      <Button guid="guidPackageEditContextCmdSet" id="EditLowerTitleCaseCommandId" priority="0x0102" type="Button">
+        <Parent guid="guidPackageEditContextCmdSet" id="EditItemsMenuGroup" />
+        <Strings>
+          <CommandName>EditLowerTitleCaseCommand</CommandName>
+          <ButtonText>Change to LowerTitleCase</ButtonText>
+        </Strings>
+      </Button>
+
+      <Button guid="guidPackageEditContextCmdSet" id="AddPublicClassCommandId" priority="0x0200" type="Button">
+        <Parent guid="guidSHLMainMenu" id="IDG_VS_CTXT_PROJECT_ADD_ITEMS"/>
+        <CommandFlag>DynamicVisibility</CommandFlag>
+        <Strings>
+          <CommandName>AddPublicClass</CommandName>
+          <ButtonText>Add Public Class...</ButtonText>
+        </Strings>
+      </Button>
+    </Buttons>
+ 
+    <Bitmaps>
+      <Bitmap guid="guidImages" href="Resources\KLExtensionCommand.png" usedList="bmpPic1, bmpPic2, bmpPic3, bmpPic4, bmpPic5, bmpPic6" />
+      <Bitmap guid="guidImages2" href="Resources\KLExtensionsEdit.png" usedList="bmpPic7, bmpPic8, bmpPic9, bmpPic10, bmpPic11" />
+      <!--7 Join LInes, 8 Convert to Full Property, 9 Convert Auto Property, 10 Var to strong Type, 11 Add Class-->
+    </Bitmaps>
+  </Commands>
+
+  <CommandPlacements>
+    <CommandPlacement guid="guidPackageCmdSet" id="AddPublicClassCommandId" priority="0x0200">
+      <Parent guid="guidSHLMainMenu" id="IDG_VS_CTXT_SOLUTION_ADD_ITEM"/>
+    </CommandPlacement>
+    <CommandPlacement guid="guidPackageCmdSet" id="AddPublicClassCommandId" priority="0x0200">
+      <Parent guid="guidSHLMainMenu" id="IDG_VS_CTXT_SLNFLDR_ADD_ITEM"/>
+    </CommandPlacement>
+  </CommandPlacements>
+
+  <VisibilityConstraints>
+    <VisibilityItem guid="guidPackageSurroundWithCmdSet" id="SurroundWithBraceCommandId" context="GUID_TextEditorFactory"/>
+    <VisibilityItem guid="guidPackageSurroundWithCmdSet" id="SurroundWithParenthesisCommandId" context="GUID_TextEditorFactory"/>
+    <VisibilityItem guid="guidPackageSurroundWithCmdSet" id="SurroundWithDoubleQuotesCommandId" context="GUID_TextEditorFactory"/>
+    <VisibilityItem guid="guidPackageEditContextCmdSet" id="EditJoinLinesCommandId" context="GUID_TextEditorFactory"/>
+    <VisibilityItem guid="guidPackageEditContextCmdSet" id="EditTitleCaseCommandId" context="GUID_TextEditorFactory"/>
+    <VisibilityItem guid="guidPackageEditContextCmdSet" id="EditLowerTitleCaseCommandId" context="GUID_TextEditorFactory"/>
+  </VisibilityConstraints>
+
+  <KeyBindings>
+    <KeyBinding guid="guidPackageCmdSet" id="RemoveCommentCommandId" mod1="Control" key1="K" mod2="Control" key2="Q" editor="guidVSStd97" />
+    <KeyBinding guid="guidPackageCmdSet" id="RemoveRegionsCommandId" mod1="Control" key1="K" mod2="Control" key2="R" editor="guidVSStd97" />
+    <KeyBinding guid="guidPackageCmdSet" id="AddPublicClassCommandId" mod1="Shift" key1="VK_F2" editor="guidVSStd97"/>
+    <KeyBinding guid="guidPackageSurroundWithCmdSet" id="SurroundWithBraceCommandId" mod1="Control Shift" key1="0xDB" editor="guidVSStd97" />
+    <KeyBinding guid="guidPackageSurroundWithCmdSet" id="SurroundWithParenthesisCommandId" mod1="Control Shift" key1="0x39" editor="guidVSStd97" />
+    <KeyBinding guid="guidPackageSurroundWithCmdSet" id="SurroundWithDoubleQuotesCommandId" mod1="Control Shift" key1="0xDE" editor="guidVSStd97" />
+    <KeyBinding guid="guidPackageEditContextCmdSet" id="EditJoinLinesCommandId" mod1="Control Shift" key1="VK_RIGHT" editor="guidVSStd97" />
+    <KeyBinding guid="guidPackageEditContextCmdSet" id="EditTitleCaseCommandId" mod1="Control Shift" key1="VK_UP" editor="guidVSStd97" />
+    <KeyBinding guid="guidPackageEditContextCmdSet" id="EditLowerTitleCaseCommandId" mod1="Control Shift" key1="VK_DOWN" editor="guidVSStd97" />
+  </KeyBindings>
+
+  <Symbols>
+    <!-- This is the package guid. -->
+    <GuidSymbol name="guidPackage" value="{c65c8ae7-d1a9-4ec6-a388-95df5120744c}" />
+
+    <GuidSymbol name="guidPackageCmdSet" value="{e2927997-aef0-4d0f-9392-a44d51a7b2c2}">
+      <IDSymbol name="KLExtensionsMenuGroup" value="0x1020" />
+      <IDSymbol name="KLExtensionsMenu" value="0x1021" />
+      <IDSymbol name="RemoveCommentCommandId" value="0x0100" />
+      <IDSymbol name="RemoveRegionsCommandId" value="0x0200" />
+      <IDSymbol name="AddPublicClassCommandId" value="266"/>
+    </GuidSymbol>
+
+    <GuidSymbol name="guidPackageSurroundWithCmdSet" value="{060f8145-dd46-4faa-ab59-dfdbeea72dcc}">
+      <IDSymbol name="SurroundWithMenuGroup" value="4128" />
+      <IDSymbol name="SurroundWithSubMenu" value="258"/>
+      <IDSymbol name="SurroundWithBraceCommandId" value="254" />
+      <IDSymbol name="SurroundWithParenthesisCommandId" value="255" />
+      <IDSymbol name="SurroundWithDoubleQuotesCommandId" value="256" />
+      <IDSymbol name="SurroundWithItemsMenuGroup" value="260"/>
+    </GuidSymbol>
+
+    <GuidSymbol name="guidPackageEditContextCmdSet" value="{707f8641-5997-4761-a5f4-8194ea23f878}">
+      <IDSymbol name="EditMenuGroup" value="4130" />
+      <IDSymbol name="EditSubMenu" value="261" />
+      <IDSymbol name="EditItemsMenuGroup" value="262" />
+      <IDSymbol name="EditJoinLinesCommandId" value="263"/>
+      <IDSymbol name="EditTitleCaseCommandId" value="264"/>
+      <IDSymbol name="EditLowerTitleCaseCommandId" value="265"/>
+    </GuidSymbol>
+
+    <GuidSymbol name="guidImages" value="{d8bf0f90-62ba-4911-b5a7-3cac6baa0d50}">
+      <IDSymbol name="bmpPic1" value="1" />
+      <IDSymbol name="bmpPic2" value="2" />
+      <IDSymbol name="bmpPic3" value="3" />
+      <IDSymbol name="bmpPic4" value="4" />
+      <IDSymbol name="bmpPic5" value="5" />
+      <IDSymbol name="bmpPic6" value="6" />
+    </GuidSymbol>
+
+    <GuidSymbol name="guidImages2" value="{be09fee2-ef0c-4f6d-9d25-53c9d7d14dee}">
+      <IDSymbol name="bmpPic7" value="1" />
+      <IDSymbol name="bmpPic8" value="2" />
+      <IDSymbol name="bmpPic9" value="3" />
+      <IDSymbol name="bmpPic10" value="4" />
+      <IDSymbol name="bmpPic11" value="5" />
+    </GuidSymbol>
+  </Symbols>
+</CommandTable>
