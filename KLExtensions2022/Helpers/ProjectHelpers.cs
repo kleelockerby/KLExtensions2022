@@ -14,11 +14,50 @@ using Microsoft.VisualStudio.TextManager.Interop;
 using Microsoft.VisualStudio.Shell.Interop;
 using System.IO;
 
-
 namespace KLExtensions2022.Helpers
 {
     public static class ProjectHelpers
     {
+        private static readonly DTE2 Dte2 = KLExtensions2022Package.DTE2 as DTE2;
+
+        public static Project GetActiveProject()
+        {
+            try
+            {
+                if (Dte2.ActiveSolutionProjects is Array activeSolutionProjects && activeSolutionProjects.Length > 0)
+                {
+                    return activeSolutionProjects.GetValue(0) as Project;
+                }
+
+                Document doc = Dte2.ActiveDocument;
+
+                if (doc != null && !string.IsNullOrEmpty(doc.FullName))
+                {
+                    ProjectItem item = Dte2.Solution?.FindProjectItem(doc.FullName);
+
+                    if (item != null)
+                    {
+                        return item.ContainingProject;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error getting the active project" + ex);
+            }
+            return null;
+        }
+
+        public static string CleanNameSpace(string ns, bool stripPeriods = true)
+        {
+            if (stripPeriods)
+            {
+                ns = ns.Replace(".", "");
+            }
+            ns = ns.Replace(" ", "").Replace("-", "").Replace("\\", ".");
+            return ns;
+        }
+
         public static IWpfTextView GetCurentTextView()
         {
             IComponentModel componentModel = GetComponentModel();
@@ -43,7 +82,7 @@ namespace KLExtensions2022.Helpers
 
         public static IComponentModel GetComponentModel()
         {
-            return (IComponentModel)Package.GetGlobalService(typeof(SComponentModel));
+            return (IComponentModel)KLExtensions2022Package.ComponentModel;
         }
 
         public static bool IsKind(this Project project, string kindGuid)
@@ -80,7 +119,7 @@ namespace KLExtensions2022.Helpers
                     .SelectMany(p => GetChildProjects(p.SubProject));
         }
 
-        public static string GetRootFolder(this Project project, DTE2 dte)
+        public static string GetRootFolder(this Project project)
         {
             if (project == null)
             {
@@ -89,7 +128,7 @@ namespace KLExtensions2022.Helpers
 
             if (project.IsKind("{66A26720-8FB5-11D2-AA7E-00C04F688DDE}")) 
             {
-                return Path.GetDirectoryName(dte.Solution.FullName);
+                return Path.GetDirectoryName(Dte2.Solution.FullName);
             }
 
             if (string.IsNullOrEmpty(project.FullName))

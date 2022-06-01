@@ -10,7 +10,7 @@ namespace KLExtensions2022
 {
     public static class ProjectItemExtensions
     {
-        //private static readonly DTE2 Dte2 = OneStreamVSIXPackage.DTE2;
+        private static readonly DTE2 Dte2 = KLExtensions2022Package.DTE2 as DTE2;
 
         public static string GetFullPathFileName(this ProjectItem item)
         {
@@ -62,14 +62,14 @@ namespace KLExtensions2022
             return projectItem.FileNames[1].TrimEnd('\\');
         }
 
-        public static ProjectItem AddFileToProject(this Project project, FileInfo file, DTE2 Dte2, string itemType = null)
+        public static ProjectItem AddFileToProject(this Project project, FileInfo file, string itemType = null)
         {
             if (project.IsKind(ProjectTypes.ASPNET_5, ProjectTypes.SSDT))
             {
                 return Dte2.Solution.FindProjectItem(file.FullName);
             }
 
-            string root = project.GetRootFolder(Dte2);
+            string root = project.GetRootFolder();
 
             if (string.IsNullOrEmpty(root) || !file.FullName.StartsWith(root, StringComparison.OrdinalIgnoreCase))
             {

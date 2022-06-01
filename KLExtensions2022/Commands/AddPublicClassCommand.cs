@@ -31,9 +31,7 @@ namespace KLExtensions2022
     internal sealed class AddPublicClassCommand
     {
         private readonly AsyncPackage package;
-        private static Document ActiveTextDocument;
         private IServiceProvider ServiceProvider { get { return this.package; } }
-        private SaveFileDialogWindow xamlDialog;
 
         public static DTE2 DTE2 { get; private set; }
 
@@ -52,7 +50,7 @@ namespace KLExtensions2022
         public static async Task InitializeAsync(AsyncPackage package)
         {
             await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync(package.DisposalToken);
-            DTE2 = await package.GetServiceAsync(typeof(DTE)) as DTE2;
+            DTE2 = KLExtensions2022Package.DTE2 as DTE2;
             Assumes.Present(DTE2);
 
             OleMenuCommandService commandService = await package.GetServiceAsync(typeof(IMenuCommandService)) as OleMenuCommandService;
@@ -82,16 +80,16 @@ namespace KLExtensions2022
             }
 
             AddItemAsync(input, target).Forget();
-
         }
 
         private async Task AddItemAsync(string fileName, NewItemTarget target)
         {
+            await KLExtensions2022Package.JoinTaskFactory.SwitchToMainThreadAsync();
             try
             {
-                ValidatePath(fileName);
+                FileHelper.ValidatePath(fileName);
                 string name = fileName;
-                if (fileName.IndexOf(".cs") == 0)
+                if (fileName.IndexOf(".cs") == -1)
                 {
                     name = $"{fileName}.cs";
                 }
@@ -119,7 +117,7 @@ namespace KLExtensions2022
                     }
                     else
                     {
-                        project.AddFileToProject(file, DTE2);
+                        project.AddFileToProject(file);
                     }
 
                     VsShellUtilities.OpenDocument(ServiceProvider, file.FullName);
@@ -132,7 +130,6 @@ namespace KLExtensions2022
                             view.Caret.MoveTo(new SnapshotPoint(view.TextBuffer.CurrentSnapshot, position));
                         }
                     }
-
                     ExecuteCommand.ExecuteCommandIfAvailable("SolutionExplorer.SyncWithActiveDocument", DTE2);
                     DTE2.ActiveDocument.Activate();
                 }
@@ -168,7 +165,6 @@ namespace KLExtensions2022
             if (!string.IsNullOrEmpty(template))
             {
                 int index = template.IndexOf('$');
-
                 if (index > -1)
                 {
                     template = template.Remove(index, 1);
@@ -187,26 +183,8 @@ namespace KLExtensions2022
             string className = name.RemoveFileNameExtension();
             string content = CSharpTemplate.Content;
             content = content.Replace("%NAMESPACE%", nameSpace).Replace("%FILENAME%", className);
-            return NormalizeLineEndings(content);
+            return FileHelper.NormalizeLineEndings(content);
         }
 
-        private static string NormalizeLineEndings(string content)
-        {
-            if (string.IsNullOrEmpty(content))
-            {
-                return content;
-            }
-
-            return Regex.Replace(content, @"\r\n|\n\r|\n|\r", "\r\n");
-        }
-
-        private void ValidatePath(string path)
-        {
-            do
-            {
-                string name = Path.GetFileName(path);
-                path = Path.GetDirectoryName(path);
-            } while (!string.IsNullOrEmpty(path));
-        }
     }
 }

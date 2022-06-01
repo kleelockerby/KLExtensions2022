@@ -15,12 +15,15 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Task = System.Threading.Tasks.Task;
+using KLExtensions2022.Helpers;
 
 namespace KLExtensions2022
 {
 	public static class ProjectExtensions
 	{
-		public static string GetRootFolder(this Project project, DTE2 Dte2)
+		private static readonly DTE2 Dte2 = KLExtensions2022Package.DTE2 as DTE2;
+
+		public static string GetRootFolder(this Project project)
 		{
 			if (project == null)
 			{
@@ -70,6 +73,29 @@ namespace KLExtensions2022
 			}
 
 			return null;
+		}
+
+		public static string GetRootNamespace(this Project project)
+		{
+			if (project == null)
+			{
+				return null;
+			}
+
+			string ns = project.Name ?? string.Empty;
+
+			try
+			{
+				Property prop = project.Properties.Item("RootNamespace");
+
+				if (prop != null && prop.Value != null && !string.IsNullOrEmpty(prop.Value.ToString()))
+				{
+					ns = prop.Value.ToString();
+				}
+			}
+			catch { /* Project doesn't have a root namespace */ }
+
+			return ProjectHelpers.CleanNameSpace(ns, stripPeriods: false);
 		}
 
 		public static bool IsKind(this Project project, params string[] kindGuids)

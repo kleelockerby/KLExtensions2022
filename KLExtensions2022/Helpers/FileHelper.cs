@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Task = System.Threading.Tasks.Task;
 
@@ -50,5 +51,23 @@ namespace KLExtensions2022.Helpers
             return path.Split(new[] { '\\' }, StringSplitOptions.RemoveEmptyEntries);
         }
 
+        public static string NormalizeLineEndings(string content)
+        {
+            if (string.IsNullOrEmpty(content))
+            {
+                return content;
+            }
+
+            return Regex.Replace(content, @"\r\n|\n\r|\n|\r", "\r\n");
+        }
+
+        public static void ValidatePath(string path)
+        {
+            do
+            {
+                string name = Path.GetFileName(path);
+                path = Path.GetDirectoryName(path);
+            } while (!string.IsNullOrEmpty(path));
+        }
     }
 }

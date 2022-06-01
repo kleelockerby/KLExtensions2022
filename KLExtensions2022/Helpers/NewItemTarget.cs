@@ -47,16 +47,27 @@ namespace KLExtensions2022
 
         private NewItemTarget(string directory, Project project, ProjectItem projectItem, bool isSolutionOrSolutionFolder)
         {
-            //int lastIndex = directory.LastIndexOf("\\");
-            //Directory = directory.TrimStart('/', '\\').Replace("/", "\\").Remove(lastIndex, 1); ;
             Directory = directory;
             Project = project;
             ProjectItem = projectItem;
             IsSolutionOrSolutionFolder = isSolutionOrSolutionFolder;
 
-            this.RootFolder = project.GetRootFolder(DTE2);
-            this.FileFolder = GetFileFolder(this.RootFolder, Directory);
+            this.RootFolder = project.GetRootFolder();
+            string fileFolder = GetFileFolder(this.RootFolder, Directory);
+            this.FileFolder = fileFolder;
+            int lastIndex = this.FileFolder.LastIndexOf("\\");
+            if (lastIndex > -1)
+            {
+                this.FileFolder = fileFolder.Remove(lastIndex, 1);
+            }
             this.NameSpace = project.Name;
+
+            if (!string.IsNullOrEmpty(this.FileFolder))
+            {
+                this.NameSpace += "." + this.FileFolder;
+            }
+
+            string rootNameSpace = project.GetRootNamespace();
         }
 
         private static NewItemTarget CreateFromSolutionExplorerSelection(DTE2 dte)
@@ -77,7 +88,7 @@ namespace KLExtensions2022
                     }
                     else
                     {
-                        return new NewItemTarget(project.GetRootFolder(dte), project, null, isSolutionOrSolutionFolder: false);
+                        return new NewItemTarget(project.GetRootFolder(), project, null, isSolutionOrSolutionFolder: false);
                     }
                 }
                 else if (selection.Object is ProjectItem projectItem)
