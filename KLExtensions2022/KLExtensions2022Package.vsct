@@ -107,12 +107,12 @@
         </Strings>
       </Button>
 
-      <Button guid="guidPackageEditContextCmdSet" id="AddPublicClassCommandId" priority="0x0200" type="Button">
+      <Button guid="guidPackageCmdSet" id="AddPublicClassCommandId" priority="0x0200" type="Button">
         <Parent guid="guidSHLMainMenu" id="IDG_VS_CTXT_PROJECT_ADD_ITEMS"/>
         <CommandFlag>DynamicVisibility</CommandFlag>
         <Strings>
           <CommandName>AddPublicClass</CommandName>
-          <ButtonText>Add Public Class...</ButtonText>
+          <ButtonText>New Public Class...</ButtonText>
         </Strings>
       </Button>
     </Buttons>
@@ -163,7 +163,7 @@
       <IDSymbol name="KLExtensionsMenu" value="0x1021" />
       <IDSymbol name="RemoveCommentCommandId" value="0x0100" />
       <IDSymbol name="RemoveRegionsCommandId" value="0x0200" />
-      <IDSymbol name="AddPublicClassCommandId" value="266"/>
+      <IDSymbol name="AddPublicClassCommandId" value="0x0210"/>
     </GuidSymbol>
 
     <GuidSymbol name="guidPackageSurroundWithCmdSet" value="{060f8145-dd46-4faa-ab59-dfdbeea72dcc}">

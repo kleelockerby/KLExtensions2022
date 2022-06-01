@@ -39,7 +39,7 @@ namespace KLExtensions2022
         public const int KLExtensionsMenu = 0x1021;
         public const int RemoveCommentCommandId = 0x0100;
         public const int RemoveRegionsCommandId = 0x0200;
-        public const int AddPublicClassCommandId = 0x010A;
+        public const int AddPublicClassCommandId = 0x0210;
         public const int SurroundWithMenuGroup = 0x1020;
         public const int SurroundWithSubMenu = 0x0102;
         public const int SurroundWithBraceCommandId = 0x00FE;
