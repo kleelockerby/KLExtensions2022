@@ -39,6 +39,7 @@ namespace KLExtensions2022
             await TitleCaseCommand.InitializeAsync(this);
             await LowerTitleCaseCommand.InitializeAsync(this);
             await AddPublicClassCommand.InitializeAsync(this);
+            await SelectWholeLineCommand.InitializeAsync(this);
         }
     }
 }

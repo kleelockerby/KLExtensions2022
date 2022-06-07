@@ -10,13 +10,6 @@
              d:DesignHeight="450" d:DesignWidth="600">
     <Grid>
         <StackPanel >
-            <Grid Margin="6" >
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="40*"/>
-                    <ColumnDefinition Width="80*"/>
-                </Grid.ColumnDefinitions>
-
-            </Grid>
             <Grid  Margin="6"   >
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="40*"/>
@@ -25,7 +18,11 @@
                 <Label x:Name="lblText" Grid.Column="0">Label</Label>
                 <TextBox Grid.Column="1" x:Name="txtName"></TextBox>
             </Grid>
-            <StackPanel  Margin="6"   HorizontalAlignment="Right" Orientation="Horizontal">
+            <StackPanel  Margin="6" HorizontalAlignment="Center" Orientation="Horizontal" VerticalAlignment="Center">
+                <RadioButton Name="btnProject" Margin="10,5,0,0" GroupName="NameSpaceType" IsChecked="true">Project</RadioButton>
+                <RadioButton Name="btnFolder" Margin="10,5,0,0" GroupName="NameSpaceType">Folder</RadioButton>
+            </StackPanel>
+            <StackPanel  Margin="6"  HorizontalAlignment="Right" Orientation="Horizontal">
                 <Button  MinWidth="45" Click="Button_Click" Margin="0,0,6,0" >Cancel</Button>
                 <Button MinWidth="45" Click="Button_Click_1" Margin="0,0,6,0"  >Ok</Button>
             </StackPanel>

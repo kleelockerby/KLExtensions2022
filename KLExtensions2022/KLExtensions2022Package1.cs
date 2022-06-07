@@ -29,6 +29,9 @@ namespace KLExtensions2022
 
         public const string guidImages2String = "be09fee2-ef0c-4f6d-9d25-53c9d7d14dee";
         public static Guid guidImages2 = new Guid(guidImages2String);
+
+        public const string guidImages3String = "9cf6d5c0-9768-421c-adfa-312091903d1a";
+        public static Guid guidImages3 = new Guid(guidImages3String);
     }
     /// <summary>
     /// Helper class that encapsulates all CommandIDs uses across VS Package.
@@ -52,6 +55,7 @@ namespace KLExtensions2022
         public const int EditJoinLinesCommandId = 0x0107;
         public const int EditTitleCaseCommandId = 0x0108;
         public const int EditLowerTitleCaseCommandId = 0x0109;
+        public const int EditSelectWholeLineCommandId = 0x010A;
         public const int bmpPic1 = 0x0001;
         public const int bmpPic2 = 0x0002;
         public const int bmpPic3 = 0x0003;
@@ -63,5 +67,9 @@ namespace KLExtensions2022
         public const int bmpPic9 = 0x0003;
         public const int bmpPic10 = 0x0004;
         public const int bmpPic11 = 0x0005;
+        public const int bmpPic12 = 0x0006;
+        public const int bmpPic13 = 0x0001;
+        public const int bmpPic14 = 0x0002;
+        public const int bmpPic15 = 0x0003;
     }
 }

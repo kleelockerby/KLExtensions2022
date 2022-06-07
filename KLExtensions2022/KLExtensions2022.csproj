@@ -54,6 +54,7 @@
     <Compile Include="Commands\SelectionBracesCommand.cs" />
     <Compile Include="Commands\SelectionDoubleQuotesCommand.cs" />
     <Compile Include="Commands\SelectionParenthesisCommand.cs" />
+    <Compile Include="Commands\SelectWholeLineCommand.cs" />
     <Compile Include="Commands\TitleCaseCommand.cs" />
     <Compile Include="Extensions\DocumentExtensions.cs" />
     <Compile Include="Extensions\EditPointExtensions.cs" />
@@ -118,6 +119,7 @@
     </Content>
     <Content Include="Resources\KLExtensionCommand.png" />
     <Content Include="Resources\KLExtensionsEdit.png" />
+    <Content Include="Resources\KLExtensionsEdit2.png" />
     <Content Include="Resources\SelectionBracesCommand.png" />
   </ItemGroup>
   <ItemGroup>

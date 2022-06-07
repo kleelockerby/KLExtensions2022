@@ -14,6 +14,7 @@ namespace KLExtensions2022
         public string Input => txtName.Text.Trim();
         public Func<string, Task> ActionToDo { get; set; } = null;
         public Action ActionToClose { get; set; } = null;
+        public string NameSpaceType { get; set; }
 
         public SaveFileDialogWindow(string labelName, string fileName, Func<string, Task> actionToDo)
         {
@@ -21,6 +22,7 @@ namespace KLExtensions2022
             this.lblText.Content = labelName;
             this.txtName.Text = fileName;
             this.ActionToDo = actionToDo;
+            GetNameSpaceType();
         }
 
         public SaveFileDialogWindow(string labelName, string fileName)
@@ -28,6 +30,7 @@ namespace KLExtensions2022
             InitializeComponent();
             this.lblText.Content = labelName;
             this.txtName.Text = fileName;
+            GetNameSpaceType();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -48,6 +51,7 @@ namespace KLExtensions2022
             if (!string.IsNullOrWhiteSpace(txtName.Text))
             {
                 DialogResult = true;
+                GetNameSpaceType();
                 if (ActionToClose == null)
                 {
                     Close();
@@ -57,6 +61,18 @@ namespace KLExtensions2022
                     ActionToClose?.Invoke();
                     ActionToDo?.Invoke(txtName.Text);
                 }
+            }
+        }
+
+        private void GetNameSpaceType()
+        {
+            if (btnProject.IsChecked == true)
+            {
+                this.NameSpaceType = "Project";
+            }
+            else
+            {
+                this.NameSpaceType = "Folder";
             }
         }
     }

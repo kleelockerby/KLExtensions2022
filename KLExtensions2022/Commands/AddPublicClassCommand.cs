@@ -73,10 +73,18 @@ namespace KLExtensions2022
             }
 
             string fileName = "class1.cs";
-            string input = PromptForFileName(fileName);
+            string input = PromptForFileName(fileName, out string nameSpaceType);
             if (string.IsNullOrEmpty(input))
             {
                 return;
+            }
+
+            if (nameSpaceType == "Folder")
+            {
+                if (!string.IsNullOrEmpty(target.FileFolder))
+                {
+                    target.NameSpace +=  "." + target.FileFolder;
+                }
             }
 
             AddItemAsync(input, target).Forget();
@@ -141,7 +149,7 @@ namespace KLExtensions2022
             }
         }
 
-        private string PromptForFileName(string fileName)
+        private string PromptForFileName(string fileName, out string nameSpaceType)
         {
             var xamlDialog = new SaveFileDialogWindow("Class Name: ", fileName)
             {
@@ -155,6 +163,7 @@ namespace KLExtensions2022
             xamlDialog.MinWidth = 500;
             xamlDialog.Title = "Move To New ViewModel File";
             bool? result = xamlDialog.ShowDialog();
+            nameSpaceType = xamlDialog.NameSpaceType;
             return (result.HasValue && result.Value) ? xamlDialog.Input : string.Empty;
         }
 

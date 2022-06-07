@@ -94,6 +94,7 @@
       </Button>
       <Button guid="guidPackageEditContextCmdSet" id="EditTitleCaseCommandId" priority="0x0102" type="Button">
         <Parent guid="guidPackageEditContextCmdSet" id="EditItemsMenuGroup" />
+        <Icon guid="guidImages3" id="bmpPic14" />
         <Strings>
           <CommandName>EditTitleCaseCommand</CommandName>
           <ButtonText>Change to TitleCase</ButtonText>
@@ -101,14 +102,24 @@
       </Button>
       <Button guid="guidPackageEditContextCmdSet" id="EditLowerTitleCaseCommandId" priority="0x0102" type="Button">
         <Parent guid="guidPackageEditContextCmdSet" id="EditItemsMenuGroup" />
+        <Icon guid="guidImages3" id="bmpPic15" />
         <Strings>
           <CommandName>EditLowerTitleCaseCommand</CommandName>
           <ButtonText>Change to LowerTitleCase</ButtonText>
         </Strings>
       </Button>
+      <Button guid="guidPackageEditContextCmdSet" id="EditSelectWholeLineCommandId" priority="0x0102" type="Button">
+        <Parent guid="guidPackageEditContextCmdSet" id="EditItemsMenuGroup" />
+        <Icon guid="guidImages2" id="bmpPic12" />
+        <Strings>
+          <CommandName>SelectWholeLineCommand</CommandName>
+          <ButtonText>Select Whole Line</ButtonText>
+        </Strings>
+      </Button>
 
       <Button guid="guidPackageCmdSet" id="AddPublicClassCommandId" priority="0x0200" type="Button">
         <Parent guid="guidSHLMainMenu" id="IDG_VS_CTXT_PROJECT_ADD_ITEMS"/>
+        <Icon guid="guidImages2" id="bmpPic11" />
         <CommandFlag>DynamicVisibility</CommandFlag>
         <Strings>
           <CommandName>AddPublicClass</CommandName>
@@ -119,8 +130,9 @@
  
     <Bitmaps>
       <Bitmap guid="guidImages" href="Resources\KLExtensionCommand.png" usedList="bmpPic1, bmpPic2, bmpPic3, bmpPic4, bmpPic5, bmpPic6" />
-      <Bitmap guid="guidImages2" href="Resources\KLExtensionsEdit.png" usedList="bmpPic7, bmpPic8, bmpPic9, bmpPic10, bmpPic11" />
-      <!--7 Join LInes, 8 Convert to Full Property, 9 Convert Auto Property, 10 Var to strong Type, 11 Add Class-->
+      <Bitmap guid="guidImages2" href="Resources\KLExtensionsEdit.png" usedList="bmpPic7, bmpPic8, bmpPic9, bmpPic10, bmpPic11, bmpPic12" />
+      <Bitmap guid="guidImages3" href="Resources\KLExtensionsEdit2.png" usedList="bmpPic13, bmpPic14, bmpPic15" />
+      <!--7 Join LInes, 8 Convert to Full Property, 9 Convert Auto Property, 10 Var to strong Type, 11 Add Class, 12 Select Whole Line, 13 Copy without indentation, 14 - Convert UpperCase, 15, Convert LowerCase-->
     </Bitmaps>
   </Commands>
 
@@ -152,6 +164,7 @@
     <KeyBinding guid="guidPackageEditContextCmdSet" id="EditJoinLinesCommandId" mod1="Control Shift" key1="VK_RIGHT" editor="guidVSStd97" />
     <KeyBinding guid="guidPackageEditContextCmdSet" id="EditTitleCaseCommandId" mod1="Control Shift" key1="VK_UP" editor="guidVSStd97" />
     <KeyBinding guid="guidPackageEditContextCmdSet" id="EditLowerTitleCaseCommandId" mod1="Control Shift" key1="VK_DOWN" editor="guidVSStd97" />
+    <KeyBinding guid="guidPackageEditContextCmdSet" id="EditSelectWholeLineCommandId" mod1="Control" key1="W" editor="guidVSStd97" />
   </KeyBindings>
 
   <Symbols>
@@ -182,6 +195,7 @@
       <IDSymbol name="EditJoinLinesCommandId" value="263"/>
       <IDSymbol name="EditTitleCaseCommandId" value="264"/>
       <IDSymbol name="EditLowerTitleCaseCommandId" value="265"/>
+      <IDSymbol name="EditSelectWholeLineCommandId" value="266"/>
     </GuidSymbol>
 
     <GuidSymbol name="guidImages" value="{d8bf0f90-62ba-4911-b5a7-3cac6baa0d50}">
@@ -199,6 +213,13 @@
       <IDSymbol name="bmpPic9" value="3" />
       <IDSymbol name="bmpPic10" value="4" />
       <IDSymbol name="bmpPic11" value="5" />
+      <IDSymbol name="bmpPic12" value="6" />
+    </GuidSymbol>
+
+    <GuidSymbol name="guidImages3" value="{9cf6d5c0-9768-421c-adfa-312091903d1a}">
+      <IDSymbol name="bmpPic13" value="1" />
+      <IDSymbol name="bmpPic14" value="2" />
+      <IDSymbol name="bmpPic15" value="3" />
     </GuidSymbol>
   </Symbols>
 </CommandTable>

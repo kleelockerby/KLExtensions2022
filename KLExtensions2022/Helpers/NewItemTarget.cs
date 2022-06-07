@@ -62,10 +62,10 @@ namespace KLExtensions2022
             }
             this.NameSpace = project.Name;
 
-            if (!string.IsNullOrEmpty(this.FileFolder))
-            {
-                this.NameSpace += "." + this.FileFolder;
-            }
+            //if (!string.IsNullOrEmpty(this.FileFolder))
+            //{
+            //    this.NameSpace += "." + this.FileFolder;
+            //}
 
             string rootNameSpace = project.GetRootNamespace();
         }
@@ -194,20 +194,3 @@ namespace KLExtensions2022
         }
     }
 }
-
-
-
-/*
-        private static NewItemTarget CreateFromProjectItem(ProjectItem projectItem)
-        {
-                projectItem = ResolveToPhysicalProjectItem(projectItem);
-                string fileName = projectItem?.GetFileNamePath();
-
-                if (string.IsNullOrEmpty(fileName))
-                {
-                    return null;
-                }
-
-                string directory = File.Exists(fileName) ? Path.GetDirectoryName(fileName) : fileName;
-                return new NewItemTarget(directory, projectItem.ContainingProject, projectItem, isSolutionOrSolutionFolder: false);
-        }*/
