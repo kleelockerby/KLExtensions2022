@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              Title="Create Class" WindowStartupLocation="CenterScreen" SizeToContent="Width"
              local:VsTheme.UseVsTheme="True"
-             d:DesignHeight="450" d:DesignWidth="600">
+             d:DesignHeight="450" d:DesignWidth="600" KeyDown="Window_KeyDown">
     <Grid>
         <StackPanel >
             <Grid  Margin="6"   >
@@ -26,6 +26,6 @@
                 <Button  MinWidth="45" Click="Button_Click" Margin="0,0,6,0" >Cancel</Button>
                 <Button MinWidth="45" Click="Button_Click_1" Margin="0,0,6,0"  >Ok</Button>
             </StackPanel>
-        </StackPanel> 
+        </StackPanel>
     </Grid>
 </local:BaseDialogWindow>

@@ -88,5 +88,23 @@ namespace KLExtensions2022
             editorOperations.DeleteHorizontalWhiteSpace();
         }
 
+        private void JoinText(TextSelection textSelection)
+        {
+            // If the selection has no length, try to pick up the next line.
+            if (textSelection.IsEmpty)
+            {
+                textSelection.LineDown(true);
+                textSelection.EndOfLine(true);
+            }
+
+            const string pattern = @"[ \t]*\r?\n[ \t]*";
+            const string replacement = @" ";
+
+            // Substitute all new lines (and optional surrounding whitespace) with a single space.
+            TextDocumentHelper.SubstituteAllStringMatches(textSelection, pattern, replacement);
+
+            // Move the cursor forward, clearing the selection.
+            textSelection.CharRight();
+        }
     }
 }

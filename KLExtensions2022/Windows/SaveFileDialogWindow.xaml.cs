@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
 using Task = System.Threading.Tasks.Task;
 
 namespace KLExtensions2022
@@ -23,6 +24,8 @@ namespace KLExtensions2022
             this.txtName.Text = fileName;
             this.ActionToDo = actionToDo;
             GetNameSpaceType();
+            txtName.Focus();
+            txtName.SelectAll();
         }
 
         public SaveFileDialogWindow(string labelName, string fileName)
@@ -31,6 +34,8 @@ namespace KLExtensions2022
             this.lblText.Content = labelName;
             this.txtName.Text = fileName;
             GetNameSpaceType();
+            txtName.Focus();
+            txtName.SelectAll();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -73,6 +78,24 @@ namespace KLExtensions2022
             else
             {
                 this.NameSpaceType = "Folder";
+            }
+        }
+
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Return)
+            {
+                DialogResult = true;
+                GetNameSpaceType();
+                if (ActionToClose == null)
+                {
+                    Close();
+                }
+                else if (ActionToDo != null)
+                {
+                    ActionToClose?.Invoke();
+                    ActionToDo?.Invoke(txtName.Text);
+                }
             }
         }
     }
