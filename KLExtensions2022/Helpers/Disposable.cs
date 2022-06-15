@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace KLExtensions2022.Helpers
+namespace KLExtensions2022
 {
     public sealed class Disposable : IDisposable
     {
@@ -24,10 +24,12 @@ namespace KLExtensions2022.Helpers
 
         public void Dispose()
         {
-            if (Disposed && !Repeatable) return;
+            if (Disposed && !Repeatable) 
+                return;
             Disposed = true;
             onDispose();
-            if (!Repeatable) onDispose = null;              
+            if (!Repeatable) 
+                onDispose = null;              
         }
     }
 }

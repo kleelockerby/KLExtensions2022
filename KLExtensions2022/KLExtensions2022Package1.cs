@@ -56,6 +56,8 @@ namespace KLExtensions2022
         public const int EditTitleCaseCommandId = 0x0108;
         public const int EditLowerTitleCaseCommandId = 0x0109;
         public const int EditSelectWholeLineCommandId = 0x010A;
+        public const int EditSortLinesAscCommandId = 0x010B;
+        public const int EditSortLinesDescCommandId = 0x010C;
         public const int bmpPic1 = 0x0001;
         public const int bmpPic2 = 0x0002;
         public const int bmpPic3 = 0x0003;

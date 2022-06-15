@@ -2,6 +2,7 @@
 <CommandTable xmlns="http://schemas.microsoft.com/VisualStudio/2005-10-18/CommandTable" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <Extern href="stdidcmd.h"/>
   <Extern href="vsshlids.h"/>
+  <Include href="KnownImageIds.vsct"/>
 
   <Commands package="guidPackage">
     <Menus>
@@ -116,6 +117,24 @@
           <ButtonText>Select Whole Line</ButtonText>
         </Strings>
       </Button>
+      <Button guid="guidPackageEditContextCmdSet" id="EditSortLinesAscCommandId" priority="0x0102" type="Button">
+        <Parent guid="guidPackageEditContextCmdSet" id="EditItemsMenuGroup" />
+        <Icon guid="ImageCatalogGuid" id="SortAscending"/>
+        <CommandFlag>IconIsMoniker</CommandFlag>
+        <Strings>
+          <CommandName>SelectLinesAscCommand</CommandName>
+          <ButtonText>Sort Selected Lines Ascending</ButtonText>
+        </Strings>
+      </Button>
+      <Button guid="guidPackageEditContextCmdSet" id="EditSortLinesDescCommandId" priority="0x0102" type="Button">
+        <Parent guid="guidPackageEditContextCmdSet" id="EditItemsMenuGroup" />
+        <Icon guid="ImageCatalogGuid" id="SortDescending"/>
+        <CommandFlag>IconIsMoniker</CommandFlag>
+        <Strings>
+          <CommandName>SelectLinesDescCommand</CommandName>
+          <ButtonText>Sort Selected Lines Descending</ButtonText>
+        </Strings>
+      </Button>
 
       <Button guid="guidPackageCmdSet" id="AddPublicClassCommandId" priority="0x0200" type="Button">
         <Parent guid="guidSHLMainMenu" id="IDG_VS_CTXT_PROJECT_ADD_ITEMS"/>
@@ -165,6 +184,8 @@
     <KeyBinding guid="guidPackageEditContextCmdSet" id="EditTitleCaseCommandId" mod1="Control Shift" key1="VK_UP" editor="guidVSStd97" />
     <KeyBinding guid="guidPackageEditContextCmdSet" id="EditLowerTitleCaseCommandId" mod1="Control Shift" key1="VK_DOWN" editor="guidVSStd97" />
     <KeyBinding guid="guidPackageEditContextCmdSet" id="EditSelectWholeLineCommandId" mod1="Control" key1="W" editor="guidVSStd97" />
+    <KeyBinding guid="guidPackageEditContextCmdSet" id="EditSortLinesAscCommandId" mod1="Alt" key1="L" mod2="Alt" key2="A" editor="guidVSStd97"/>
+    <KeyBinding guid="guidPackageEditContextCmdSet" id="EditSortLinesDescCommandId" mod1="Alt" key1="L" mod2="Alt" key2="D" editor="guidVSStd97"/>
   </KeyBindings>
 
   <Symbols>
@@ -196,6 +217,8 @@
       <IDSymbol name="EditTitleCaseCommandId" value="264"/>
       <IDSymbol name="EditLowerTitleCaseCommandId" value="265"/>
       <IDSymbol name="EditSelectWholeLineCommandId" value="266"/>
+      <IDSymbol name="EditSortLinesAscCommandId" value="267"/>
+      <IDSymbol name="EditSortLinesDescCommandId" value="268"/>
     </GuidSymbol>
 
     <GuidSymbol name="guidImages" value="{d8bf0f90-62ba-4911-b5a7-3cac6baa0d50}">

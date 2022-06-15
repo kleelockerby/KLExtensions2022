@@ -21,7 +21,6 @@ using EnvDTE80;
 using Microsoft;
 using System.Threading.Tasks;
 using Task = System.Threading.Tasks.Task;
-using Microsoft.VisualStudio.Shell.Interop;
 using System.IO;
 using System.Windows;
 
