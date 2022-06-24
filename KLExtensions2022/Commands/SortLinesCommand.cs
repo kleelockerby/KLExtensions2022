@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
 using EnvDTE;
@@ -70,12 +71,16 @@ namespace KLExtensions2022
             try
             {
                 TextDocument document = GetTextDocument();
+                // SortText(document.Selection);
+
                 IEnumerable<string> lines = GetSelectedLines(document);
 
                 string result = SortLines(direction, lines);
 
                 if (result == document.Selection.Text)
+                {
                     return;
+                }
 
                 using (UndoContext("Sort Selected Lines"))
                 {
@@ -120,7 +125,6 @@ namespace KLExtensions2022
             }
         }
 
-
         private string SortLines(Direction direction, IEnumerable<string> lines)
         {
             if (direction == Direction.Ascending)
@@ -133,6 +137,49 @@ namespace KLExtensions2022
             }
 
             return string.Join(Environment.NewLine, lines);
+        }
+
+        private void SortText(TextSelection textSelection)
+        {
+            if (textSelection.IsEmpty)
+            {
+                textSelection.LineDown(true);
+                textSelection.EndOfLine(true);
+            }
+
+            var start = textSelection.TopPoint.CreateEditPoint();
+            start.StartOfLine();
+
+            var end = textSelection.BottomPoint.CreateEditPoint();
+            if (!end.AtStartOfLine)
+            {
+                end.EndOfLine();
+                end.CharRight();
+            }
+
+            var selectedText = start.GetText(end);
+
+            var splitText = selectedText.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+            var orderedText = splitText.OrderBy(x => x);
+
+            var sb = new StringBuilder();
+            foreach (var line in orderedText)
+            {
+                sb.AppendLine(line);
+            }
+
+            var sortedText = sb.ToString();
+
+            if (!selectedText.Equals(sortedText, StringComparison.CurrentCulture))
+            {
+                start.Delete(end);
+
+                var insertCursor = start.CreateEditPoint();
+                insertCursor.Insert(sortedText);
+
+                textSelection.MoveToPoint(start, false);
+                textSelection.MoveToPoint(insertCursor, true);
+            }
         }
     }
 }

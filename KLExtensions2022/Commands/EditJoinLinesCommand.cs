@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.Design;
 using Microsoft.VisualStudio.ComponentModelHost;
 using Microsoft.VisualStudio.Shell;
@@ -16,14 +17,21 @@ using EnvDTE;
 using EnvDTE80;
 using Microsoft;
 using Task = System.Threading.Tasks.Task;
+using System.Linq;
+using System.Text;
+using System.Windows.Documents;
+using static Microsoft.ServiceHub.Framework.ServiceBrokerClient;
+using System.Windows.Forms;
+using System.Text.RegularExpressions;
 
 namespace KLExtensions2022
 {
     internal sealed class EditJoinLinesCommand
     {
         private static TextDocument activeTextDocument;
+        private IVsTextManager textManager;
 
-        public static DTE2 DTE { get; private set; }
+        public static DTE2 DTE2 { get; private set; }
         public static EditJoinLinesCommand Instance { get; private set; }
 
         private EditJoinLinesCommand(OleMenuCommandService commandService)
@@ -37,10 +45,10 @@ namespace KLExtensions2022
         {
             await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync(package.DisposalToken);
 
-            DTE = await package.GetServiceAsync(typeof(DTE)) as DTE2;
-            activeTextDocument = DTE.ActiveDocument?.GetTextDocument();
+            DTE2 = await package.GetServiceAsync(typeof(DTE)) as DTE2;
+            activeTextDocument = DTE2.ActiveDocument?.GetTextDocument();
 
-            Assumes.Present(DTE);
+            Assumes.Present(DTE2);
 
             OleMenuCommandService commandService = await package.GetServiceAsync(typeof(IMenuCommandService)) as OleMenuCommandService;
             Instance = new EditJoinLinesCommand(commandService);
@@ -67,44 +75,121 @@ namespace KLExtensions2022
 
         private void Execute(OleMenuCommand button)
         {
-            JoinLines();
-            //JoinTextLines();
-            //JoinSelectedLines();
+            //ThreadHelper.ThrowIfNotOnUIThread();
+            try
+            {
+                DTE2.UndoContext.Open(button.Text);
+                textManager = (IVsTextManager)ServiceProvider.GlobalProvider.GetService(typeof(SVsTextManager));
+                JoinLines();
+            }
+            catch (Exception ex)
+            {
+                Logger.Log(ex);
+            }
+            finally
+            {
+                DTE2.UndoContext.Close();
+            }
         }
 
         private void JoinLines()
         {
             ThreadHelper.ThrowIfNotOnUIThread();
-            IWpfTextView view = ProjectHelpers.GetCurentTextView();
+            IWpfTextView textView = ProjectHelpers.GetCurentTextView();
+            EnvDTE.TextSelection selection = (EnvDTE.TextSelection)activeTextDocument.Selection;
+            string input = selection.Text;
 
-            // 1. If Selection.Length == 0 (i.e. Cursor just placed in text) => iterate through lines until "{"
-            // 2. If Selection.Lines.Length >= 2) => Parse Lines
-
-            IEditorOperationsFactoryService editor = GetEditorAdaptersFactoryService();
-            IEditorOperations editorOperations = editor.GetEditorOperations(view);
-
-            editorOperations.MoveToEndOfLine(false);
-            editorOperations.Delete();
-            editorOperations.DeleteHorizontalWhiteSpace();
+            if (selection.IsEmpty)
+            {
+                input = ExpandSelection(textView, selection);
+            }
+            string txt = RemoveSpacesAndReturns(input);
+            EditPoint startPoint = selection.TopPoint.CreateEditPoint();
+            EditPoint endPoint = selection.BottomPoint.CreateEditPoint();
+            endPoint.ReplaceText(startPoint, txt, (int)vsEPReplaceTextOptions.vsEPReplaceTextAutoformat);
+            selection.CharRight();
         }
 
-        private void JoinText(TextSelection textSelection)
+        private string RemoveSpacesAndReturns(string input)
         {
-            // If the selection has no length, try to pick up the next line.
-            if (textSelection.IsEmpty)
+            string input2 = input;
+            string pattern = "(\\r?\\n[\\s\\t]+)";
+            string replace = "";
+            input = Regex.Replace(input, pattern, replace);
+            return input;
+        }
+
+        private string ExpandSelection(IWpfTextView textView, EnvDTE.TextSelection selection)
+        {
+            IEditorOperationsFactoryService editorOperationsFactoryService = GetEditorAdaptersFactoryService();
+            IEditorOperations editorOperations = editorOperationsFactoryService.GetEditorOperations(textView);
+            editorOperations.MoveToStartOfLine(false);
+
+            bool isValidEndingChar = false;
+            while (!isValidEndingChar)
             {
-                textSelection.LineDown(true);
-                textSelection.EndOfLine(true);
+                editorOperations.MoveToEndOfLine(true);
+                string selectedText = selection.Text;
+                string lastChar = selectedText.TrimEnd().Substring(selectedText.Length - 1);
+                
+                if (lastChar != ";" && lastChar != "{")
+                {
+                    editorOperations.MoveToStartOfNextLineAfterWhiteSpace(true);
+                    editorOperations.MoveToNextCharacter(true);
+                    selectedText = selection.Text;
+                    lastChar = selectedText.TrimEnd().Substring(selectedText.Length - 1);
+                    
+                    if (lastChar == ";")
+                    {
+                        editorOperations.MoveToStartOfLine(true);
+                        editorOperations.MoveToStartOfPreviousLineAfterWhiteSpace(true);
+                        editorOperations.MoveToEndOfLine(true);
+                        isValidEndingChar = true;
+                    }
+                }
+                else
+                {
+                    isValidEndingChar = true;
+                }
             }
+            return selection.Text;
+        }
 
-            const string pattern = @"[ \t]*\r?\n[ \t]*";
-            const string replacement = @" ";
-
-            // Substitute all new lines (and optional surrounding whitespace) with a single space.
-            TextDocumentHelper.SubstituteAllStringMatches(textSelection, pattern, replacement);
-
-            // Move the cursor forward, clearing the selection.
-            textSelection.CharRight();
+        public IDisposable UndoContext(string name)
+        {
+            ThreadHelper.ThrowIfNotOnUIThread();
+            DTE2.UndoContext.Open(name);
+            return new Disposable(DTE2.UndoContext.Close);
         }
     }
 }
+
+
+
+/*
+private string LoopLines(ITextSnapshot snapshot, int startLineNumber, out int joinedLength)
+{
+    string joinedText = string.Empty;
+    string totalText = string.Empty;
+
+    int currentLineNumber = startLineNumber;
+    string lastChar = "";
+    while (lastChar != ";" && lastChar != "{")
+    {
+        string lineText = snapshot.GetLineFromLineNumber(currentLineNumber).GetText();
+        lastChar = lineText.TrimEnd().Substring(lineText.Length - 1);
+        if (lastChar != ";" && lastChar != "{")
+        {
+            //totalText += (currentLineNumber == startLineNumber) ? $"{lineText} " : $"{lineText} ";
+            totalText += $"{lineText} ";
+            joinedText += (currentLineNumber == startLineNumber) ? $"{lineText} " : $"{lineText.TrimStart()} ";
+        }
+        currentLineNumber++;
+    }
+    joinedLength = totalText.Length + 2;
+    return joinedText.TrimEnd();
+}
+
+
+
+*/

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using KLExtensions2022.Extensions;
 using Microsoft.VisualStudio.Shell;
+using System.Text.RegularExpressions;
 
 namespace KLExtensions2022.Helpers
 {
@@ -112,7 +113,7 @@ namespace KLExtensions2022.Helpers
 
         internal static void SubstituteAllStringMatches(TextDocument textDocument, string patternString, string replacementString)
         {
-            ThreadHelper.ThrowIfNotOnUIThread();
+            //ThreadHelper.ThrowIfNotOnUIThread();
             TextRanges dummy = null;
             int lastCount = -1;
             while (textDocument.ReplacePattern(patternString, replacementString, StandardFindOptions, ref dummy))
@@ -128,14 +129,15 @@ namespace KLExtensions2022.Helpers
 
         internal static void SubstituteAllStringMatches(TextSelection textSelection, string patternString, string replacementString)
         {
-            ThreadHelper.ThrowIfNotOnUIThread();
+            //ThreadHelper.ThrowIfNotOnUIThread();
             TextRanges dummy = null;
             int lastCount = -1;
+
             while (textSelection.ReplacePattern(patternString, replacementString, StandardFindOptions, ref dummy))
             {
                 if (lastCount == dummy.Count)
                 {
-                    //OutputWindowHelper.WarningWriteLine("Forced a break out of TextDocumentHelper's SubstituteAllStringMatches for a selection.");
+                    Console.WriteLine("Forced a break out of TextDocumentHelper's SubstituteAllStringMatches for a selection.");
                     break;
                 }
                 lastCount = dummy.Count;
@@ -144,7 +146,7 @@ namespace KLExtensions2022.Helpers
 
         internal static void SubstituteAllStringMatches(EditPoint startPoint, EditPoint endPoint, string patternString, string replacementString)
         {
-            ThreadHelper.ThrowIfNotOnUIThread();
+            //ThreadHelper.ThrowIfNotOnUIThread();
             TextRanges dummy = null;
             int lastCount = -1;
             while (startPoint.ReplacePattern(endPoint, patternString, replacementString, StandardFindOptions, ref dummy))
@@ -156,6 +158,16 @@ namespace KLExtensions2022.Helpers
                 }
                 lastCount = dummy.Count;
             }
+        }
+
+
+        internal static string NormalizeLineEndings(string content)
+        {
+            if (string.IsNullOrEmpty(content))
+            {
+                return content;
+            }
+            return Regex.Replace(content, @"\r\n|\n\r|\n|\r", "\r\n");
         }
     }
 }
