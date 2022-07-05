@@ -54,6 +54,7 @@ namespace KLExtensions2022
         public const int EditItemsMenuGroup = 0x0106;
         public const int EditJoinLinesCommandId = 0x0107;
         public const int EditTitleCaseCommandId = 0x0108;
+        public const int EditSentenceCaseCommandId = 0x010D;
         public const int EditLowerTitleCaseCommandId = 0x0109;
         public const int EditSelectWholeLineCommandId = 0x010A;
         public const int EditSortLinesAscCommandId = 0x010B;
@@ -73,5 +74,6 @@ namespace KLExtensions2022
         public const int bmpPic13 = 0x0001;
         public const int bmpPic14 = 0x0002;
         public const int bmpPic15 = 0x0003;
+        public const int bmpPic16 = 0x0004;
     }
 }

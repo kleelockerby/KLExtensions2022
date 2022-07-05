@@ -38,6 +38,7 @@ namespace KLExtensions2022
             await EditJoinLinesCommand.InitializeAsync(this);
             await TitleCaseCommand.InitializeAsync(this);
             await LowerTitleCaseCommand.InitializeAsync(this);
+            await SentenceCaseCommand.InitializeAsync(this);
             await AddPublicClassCommand.InitializeAsync(this);
             await SelectWholeLineCommand.InitializeAsync(this);
             await SortLinesCommand.InitializeAsync(this);

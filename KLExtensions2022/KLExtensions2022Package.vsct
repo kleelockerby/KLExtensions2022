@@ -109,7 +109,15 @@
           <ButtonText>Change to LowerTitleCase</ButtonText>
         </Strings>
       </Button>
-      <Button guid="guidPackageEditContextCmdSet" id="EditSelectWholeLineCommandId" priority="0x0102" type="Button">
+      <Button guid="guidPackageEditContextCmdSet" id="EditSentenceCaseCommandId" priority="0x0102" type="Button">
+        <Parent guid="guidPackageEditContextCmdSet" id="EditItemsMenuGroup" />
+        <Icon guid="guidImages3" id="bmpPic16" />
+        <Strings>
+          <CommandName>EditSentenceCaseCommand</CommandName>
+          <ButtonText>Change to SentenceCase</ButtonText>
+        </Strings>
+      </Button>
+      <Button guid="guidPackageEditContextCmdSet" id="EditSelectWholeLineCommandId" priority="0x0103" type="Button">
         <Parent guid="guidPackageEditContextCmdSet" id="EditItemsMenuGroup" />
         <Icon guid="guidImages2" id="bmpPic12" />
         <Strings>
@@ -117,7 +125,7 @@
           <ButtonText>Select Whole Line</ButtonText>
         </Strings>
       </Button>
-      <Button guid="guidPackageEditContextCmdSet" id="EditSortLinesAscCommandId" priority="0x0102" type="Button">
+      <Button guid="guidPackageEditContextCmdSet" id="EditSortLinesAscCommandId" priority="0x0103" type="Button">
         <Parent guid="guidPackageEditContextCmdSet" id="EditItemsMenuGroup" />
         <Icon guid="ImageCatalogGuid" id="SortAscending"/>
         <CommandFlag>IconIsMoniker</CommandFlag>
@@ -126,7 +134,7 @@
           <ButtonText>Sort Selected Lines Ascending</ButtonText>
         </Strings>
       </Button>
-      <Button guid="guidPackageEditContextCmdSet" id="EditSortLinesDescCommandId" priority="0x0102" type="Button">
+      <Button guid="guidPackageEditContextCmdSet" id="EditSortLinesDescCommandId" priority="0x0103" type="Button">
         <Parent guid="guidPackageEditContextCmdSet" id="EditItemsMenuGroup" />
         <Icon guid="ImageCatalogGuid" id="SortDescending"/>
         <CommandFlag>IconIsMoniker</CommandFlag>
@@ -135,7 +143,6 @@
           <ButtonText>Sort Selected Lines Descending</ButtonText>
         </Strings>
       </Button>
-
       <Button guid="guidPackageCmdSet" id="AddPublicClassCommandId" priority="0x0200" type="Button">
         <Parent guid="guidSHLMainMenu" id="IDG_VS_CTXT_PROJECT_ADD_ITEMS"/>
         <Icon guid="guidImages2" id="bmpPic11" />
@@ -150,8 +157,8 @@
     <Bitmaps>
       <Bitmap guid="guidImages" href="Resources\KLExtensionCommand.png" usedList="bmpPic1, bmpPic2, bmpPic3, bmpPic4, bmpPic5, bmpPic6" />
       <Bitmap guid="guidImages2" href="Resources\KLExtensionsEdit.png" usedList="bmpPic7, bmpPic8, bmpPic9, bmpPic10, bmpPic11, bmpPic12" />
-      <Bitmap guid="guidImages3" href="Resources\KLExtensionsEdit2.png" usedList="bmpPic13, bmpPic14, bmpPic15" />
-      <!--7 Join LInes, 8 Convert to Full Property, 9 Convert Auto Property, 10 Var to strong Type, 11 Add Class, 12 Select Whole Line, 13 Copy without indentation, 14 - Convert UpperCase, 15, Convert LowerCase-->
+      <Bitmap guid="guidImages3" href="Resources\KLExtensionsEdit2.png" usedList="bmpPic13, bmpPic14, bmpPic15, bmpPic16" />
+      <!--7 Join LInes, 8 Convert to Full Property, 9 Convert Auto Property, 10 Var to strong Type, 11 Add Class, 12 Select Whole Line, 13 Copy without indentation, 14 - Convert UpperCase, 15, Convert LowerCase, 16 Convert ToSentenceCase -->
     </Bitmaps>
   </Commands>
 
@@ -171,6 +178,7 @@
     <VisibilityItem guid="guidPackageEditContextCmdSet" id="EditJoinLinesCommandId" context="GUID_TextEditorFactory"/>
     <VisibilityItem guid="guidPackageEditContextCmdSet" id="EditTitleCaseCommandId" context="GUID_TextEditorFactory"/>
     <VisibilityItem guid="guidPackageEditContextCmdSet" id="EditLowerTitleCaseCommandId" context="GUID_TextEditorFactory"/>
+    <VisibilityItem guid="guidPackageEditContextCmdSet" id="EditSentenceCaseCommandId" context="GUID_TextEditorFactory"/>
   </VisibilityConstraints>
 
   <KeyBindings>
@@ -183,6 +191,7 @@
     <KeyBinding guid="guidPackageEditContextCmdSet" id="EditJoinLinesCommandId" mod1="Control Shift" key1="VK_RIGHT" editor="guidVSStd97" />
     <KeyBinding guid="guidPackageEditContextCmdSet" id="EditTitleCaseCommandId" mod1="Control Shift" key1="VK_UP" editor="guidVSStd97" />
     <KeyBinding guid="guidPackageEditContextCmdSet" id="EditLowerTitleCaseCommandId" mod1="Control Shift" key1="VK_DOWN" editor="guidVSStd97" />
+    <KeyBinding guid="guidPackageEditContextCmdSet" id="EditSentenceCaseCommandId" mod1="Control Shift" key1="VK_UP" editor="guidVSStd97" />
     <KeyBinding guid="guidPackageEditContextCmdSet" id="EditSelectWholeLineCommandId" mod1="Control" key1="W" editor="guidVSStd97" />
     <KeyBinding guid="guidPackageEditContextCmdSet" id="EditSortLinesAscCommandId" mod1="Alt" key1="L" mod2="Alt" key2="A" editor="guidVSStd97"/>
     <KeyBinding guid="guidPackageEditContextCmdSet" id="EditSortLinesDescCommandId" mod1="Alt" key1="L" mod2="Alt" key2="D" editor="guidVSStd97"/>
@@ -215,6 +224,7 @@
       <IDSymbol name="EditItemsMenuGroup" value="262" />
       <IDSymbol name="EditJoinLinesCommandId" value="263"/>
       <IDSymbol name="EditTitleCaseCommandId" value="264"/>
+      <IDSymbol name="EditSentenceCaseCommandId" value="269"/>
       <IDSymbol name="EditLowerTitleCaseCommandId" value="265"/>
       <IDSymbol name="EditSelectWholeLineCommandId" value="266"/>
       <IDSymbol name="EditSortLinesAscCommandId" value="267"/>
@@ -243,6 +253,7 @@
       <IDSymbol name="bmpPic13" value="1" />
       <IDSymbol name="bmpPic14" value="2" />
       <IDSymbol name="bmpPic15" value="3" />
+      <IDSymbol name="bmpPic16" value="4" />
     </GuidSymbol>
   </Symbols>
 </CommandTable>
