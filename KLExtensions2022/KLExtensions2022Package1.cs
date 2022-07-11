@@ -59,6 +59,11 @@ namespace KLExtensions2022
         public const int EditSelectWholeLineCommandId = 0x010A;
         public const int EditSortLinesAscCommandId = 0x010B;
         public const int EditSortLinesDescCommandId = 0x010C;
+        public const int EditRemoveEmptyLinesCommandId = 0x011D;
+        public const int SelectMenuGroup = 0x140A;
+        public const int SelectSubMenu = 0x0231;
+        public const int SelectItemsMenuGroup = 0x0232;
+        public const int SelectMoveToFunctionCommandId = 0x0233;
         public const int bmpPic1 = 0x0001;
         public const int bmpPic2 = 0x0002;
         public const int bmpPic3 = 0x0003;
@@ -75,5 +80,6 @@ namespace KLExtensions2022
         public const int bmpPic14 = 0x0002;
         public const int bmpPic15 = 0x0003;
         public const int bmpPic16 = 0x0004;
+        public const int bmpPic17 = 0x0005;
     }
 }

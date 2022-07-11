@@ -42,6 +42,8 @@ namespace KLExtensions2022
             await AddPublicClassCommand.InitializeAsync(this);
             await SelectWholeLineCommand.InitializeAsync(this);
             await SortLinesCommand.InitializeAsync(this);
+            await SelectMoveToFunctionCommand.InitializeAsync(this);
+            await RemoveEmptyLinesCommand.InitializeAsync(this);
         }
     }
 }

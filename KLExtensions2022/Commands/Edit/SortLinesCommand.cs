@@ -9,9 +9,7 @@ using System.Linq;
 using Microsoft;
 using System.Threading.Tasks;
 using Task = System.Threading.Tasks.Task;
-using System.IO;
-using System.Windows;
-
+#pragma warning disable VSTHRD010
 
 namespace KLExtensions2022
 {

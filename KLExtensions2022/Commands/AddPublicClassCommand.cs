@@ -31,7 +31,6 @@ namespace KLExtensions2022
     {
         private readonly AsyncPackage package;
         private IServiceProvider ServiceProvider { get { return this.package; } }
-
         public static DTE2 DTE2 { get; private set; }
 
         public static AddPublicClassCommand Instance { get; private set; }

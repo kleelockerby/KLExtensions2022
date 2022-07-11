@@ -22,7 +22,6 @@ namespace KLExtensions2022
     internal sealed class SelectWholeLineCommand
     {
         private static AsyncPackage package;
-
         public static SelectWholeLineCommand Instance { get; private set; }
 
         private SelectWholeLineCommand(OleMenuCommandService commandService)

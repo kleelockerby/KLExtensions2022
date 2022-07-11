@@ -46,25 +46,30 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Commands\AddPublicClassCommand.cs" />
-    <Compile Include="Commands\CopyWithoutIndentation.cs" />
-    <Compile Include="Commands\EditJoinLinesCommand.cs" />
+    <Compile Include="Commands\Base\BaseCommand.cs" />
+    <Compile Include="Commands\Base\CommandAttribute.cs" />
+    <Compile Include="Commands\Edit\CopyWithoutIndentation.cs" />
+    <Compile Include="Commands\Edit\EditJoinLinesCommand.cs" />
     <Compile Include="Commands\ExecuteCommand.cs" />
-    <Compile Include="Commands\LowerTitleCaseCommand.cs" />
+    <Compile Include="Commands\Edit\LowerTitleCaseCommand.cs" />
     <Compile Include="Commands\RemoveCommentCommand.cs" />
+    <Compile Include="Commands\RemoveEmptyLinesCommand.cs" />
     <Compile Include="Commands\RemoveRegionsCommand.cs" />
-    <Compile Include="Commands\SelectionBracesCommand.cs" />
-    <Compile Include="Commands\SelectionDoubleQuotesCommand.cs" />
-    <Compile Include="Commands\SelectionParenthesisCommand.cs" />
-    <Compile Include="Commands\SelectWholeLineCommand.cs" />
-    <Compile Include="Commands\SentenceCaseCommand.cs" />
-    <Compile Include="Commands\SortLinesCommand.cs" />
-    <Compile Include="Commands\TitleCaseCommand.cs" />
+    <Compile Include="Commands\Select\SelectMoveToFunctionCommand.cs" />
+    <Compile Include="Commands\SurroundWith\SelectionBracesCommand.cs" />
+    <Compile Include="Commands\SurroundWith\SelectionDoubleQuotesCommand.cs" />
+    <Compile Include="Commands\SurroundWith\SelectionParenthesisCommand.cs" />
+    <Compile Include="Commands\Select\SelectWholeLineCommand.cs" />
+    <Compile Include="Commands\Edit\SentenceCaseCommand.cs" />
+    <Compile Include="Commands\Edit\SortLinesCommand.cs" />
+    <Compile Include="Commands\Edit\TitleCaseCommand.cs" />
     <Compile Include="Enums\Direction.cs" />
     <Compile Include="Extensions\DocumentExtensions.cs" />
     <Compile Include="Extensions\EditPointExtensions.cs" />
     <Compile Include="Extensions\ProjectExtensions.cs" />
     <Compile Include="Extensions\ProjectItemExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="Extensions\TaskExtensions.cs" />
     <Compile Include="Helpers\ContentTypes.cs" />
     <Compile Include="Helpers\Disposable.cs" />
     <Compile Include="Helpers\DTEHelper.cs" />
@@ -145,6 +150,7 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\VSSDK\Microsoft.VsSDK.targets" Condition="'$(VSToolsPath)' != ''" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

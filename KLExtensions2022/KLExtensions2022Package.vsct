@@ -24,6 +24,13 @@
           <ButtonText>Edit</ButtonText>
         </Strings>
       </Menu>
+
+      <Menu guid="guidPackageEditContextCmdSet" id="SelectSubMenu" priority="0x0101" type="Menu">
+        <Parent guid="guidPackageEditContextCmdSet" id="SelectMenuGroup" />
+        <Strings>
+          <ButtonText>Select</ButtonText>
+        </Strings>
+      </Menu>
     </Menus>
 
     <Groups>
@@ -41,6 +48,13 @@
       </Group>
       <Group guid="guidPackageEditContextCmdSet" id="EditItemsMenuGroup" priority="0x0600">
         <Parent guid="guidPackageEditContextCmdSet" id="EditSubMenu" />
+      </Group>
+
+      <Group guid="guidPackageEditContextCmdSet" id="SelectMenuGroup" priority="0x0600">
+        <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_CODEWIN" />
+      </Group>
+      <Group guid="guidPackageEditContextCmdSet" id="SelectItemsMenuGroup" priority="0x0600">
+        <Parent guid="guidPackageEditContextCmdSet" id="SelectSubMenu" />
       </Group>
     </Groups>
 
@@ -118,7 +132,7 @@
         </Strings>
       </Button>
       <Button guid="guidPackageEditContextCmdSet" id="EditSelectWholeLineCommandId" priority="0x0103" type="Button">
-        <Parent guid="guidPackageEditContextCmdSet" id="EditItemsMenuGroup" />
+        <Parent guid="guidPackageEditContextCmdSet" id="SelectItemsMenuGroup" />
         <Icon guid="guidImages2" id="bmpPic12" />
         <Strings>
           <CommandName>SelectWholeLineCommand</CommandName>
@@ -143,6 +157,17 @@
           <ButtonText>Sort Selected Lines Descending</ButtonText>
         </Strings>
       </Button>
+
+      <Button guid="guidPackageEditContextCmdSet" id="EditRemoveEmptyLinesCommandId" priority="0x0104" type="Button">
+        <Parent guid="guidPackageEditContextCmdSet" id="EditItemsMenuGroup" />
+        <Icon guid="ImageCatalogGuid" id="RemoveVerticalSpacing"/>
+        <CommandFlag>IconIsMoniker</CommandFlag>
+        <Strings>
+          <CommandName>RemoveEmptyLinesCommand</CommandName>
+          <ButtonText>Remove Empty Lines</ButtonText>
+        </Strings>
+      </Button>
+      
       <Button guid="guidPackageCmdSet" id="AddPublicClassCommandId" priority="0x0200" type="Button">
         <Parent guid="guidSHLMainMenu" id="IDG_VS_CTXT_PROJECT_ADD_ITEMS"/>
         <Icon guid="guidImages2" id="bmpPic11" />
@@ -150,6 +175,15 @@
         <Strings>
           <CommandName>AddPublicClass</CommandName>
           <ButtonText>New Public Class...</ButtonText>
+        </Strings>
+      </Button>
+
+      <Button guid="guidPackageEditContextCmdSet" id="SelectMoveToFunctionCommandId" priority="0x0101" type="Button">
+        <Parent guid="guidPackageEditContextCmdSet" id="SelectItemsMenuGroup" />
+        <Icon guid="guidImages3" id="bmpPic17" />
+        <Strings>
+          <CommandName>SelectMoveToFunctionCommand</CommandName>
+          <ButtonText>Move Caret to Function</ButtonText>
         </Strings>
       </Button>
     </Buttons>
@@ -195,6 +229,7 @@
     <KeyBinding guid="guidPackageEditContextCmdSet" id="EditSelectWholeLineCommandId" mod1="Control" key1="W" editor="guidVSStd97" />
     <KeyBinding guid="guidPackageEditContextCmdSet" id="EditSortLinesAscCommandId" mod1="Alt" key1="L" mod2="Alt" key2="A" editor="guidVSStd97"/>
     <KeyBinding guid="guidPackageEditContextCmdSet" id="EditSortLinesDescCommandId" mod1="Alt" key1="L" mod2="Alt" key2="D" editor="guidVSStd97"/>
+    <KeyBinding guid="guidPackageEditContextCmdSet" id="SelectMoveToFunctionCommandId" mod1="Control" key1="M" mod2="Control" key2="Z" editor="guidVSStd97"/>
   </KeyBindings>
 
   <Symbols>
@@ -229,7 +264,21 @@
       <IDSymbol name="EditSelectWholeLineCommandId" value="266"/>
       <IDSymbol name="EditSortLinesAscCommandId" value="267"/>
       <IDSymbol name="EditSortLinesDescCommandId" value="268"/>
+      <IDSymbol name="EditRemoveEmptyLinesCommandId" value="285"/>
+
+      <IDSymbol name="SelectMenuGroup" value="5130" />
+      <IDSymbol name="SelectSubMenu" value="561" />
+      <IDSymbol name="SelectItemsMenuGroup" value="562" />
+      <IDSymbol name="SelectMoveToFunctionCommandId" value="563"/>
     </GuidSymbol>
+    
+    <!--<GuidSymbol name="guidPackageSelectContextCmdSet" value="{60ee3729-2e5c-4bdd-80ac-2e0db4141e7d}">
+      <IDSymbol name="SelectMenuGroup" value="5130" />
+      <IDSymbol name="SelectSubMenu" value="561" />
+      <IDSymbol name="SelectItemsMenuGroup" value="562" />
+      <IDSymbol name="SelectMoveToFunctionCommandId" value="563"/>
+    </GuidSymbol>-->
+    
 
     <GuidSymbol name="guidImages" value="{d8bf0f90-62ba-4911-b5a7-3cac6baa0d50}">
       <IDSymbol name="bmpPic1" value="1" />
@@ -254,6 +303,7 @@
       <IDSymbol name="bmpPic14" value="2" />
       <IDSymbol name="bmpPic15" value="3" />
       <IDSymbol name="bmpPic16" value="4" />
+      <IDSymbol name="bmpPic17" value="5" />
     </GuidSymbol>
   </Symbols>
 </CommandTable>
