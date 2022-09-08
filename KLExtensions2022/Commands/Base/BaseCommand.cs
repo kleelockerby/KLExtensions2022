@@ -20,6 +20,7 @@ namespace KLExtensions2022.Commands
         public OleMenuCommand Command { get; private set; }
         public AsyncPackage Package { get; private set; } = null;
         public static DTE2 DTE2 { get; private set; }
+        public static DTE DTE { get; private set; }
         public Guid Guid { get; private set; }
         public int Id { get; private set; }
 
@@ -37,6 +38,7 @@ namespace KLExtensions2022.Commands
             await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync(package.DisposalToken);
 
             DTE2 = KLExtensions2022Package.DTE2 as DTE2;
+            DTE = KLExtensions2022Package.DTE as DTE;
 
             IMenuCommandService commandService = (IMenuCommandService)await package.GetServiceAsync(typeof(IMenuCommandService));
             Assumes.Present(commandService);

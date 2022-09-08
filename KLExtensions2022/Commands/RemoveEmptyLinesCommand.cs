@@ -14,8 +14,6 @@ namespace KLExtensions2022
     [Command(PackageGuids.guidPackageEditContextCmdSetString, PackageIds.EditRemoveEmptyLinesCommandId)]
     internal class RemoveEmptyLinesCommand : BaseCommand<RemoveEmptyLinesCommand>
     {
-        //private delegate void Replacement(Direction direction);
-
         protected override async Task ExecuteAsync(OleMenuCmdEventArgs e)
         {
             try

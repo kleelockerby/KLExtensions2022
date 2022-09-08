@@ -75,6 +75,15 @@
           <ButtonText>Remove Regions</ButtonText>
         </Strings>
       </Button>
+      <Button guid="guidPackageCmdSet" id="SetAllMethodsBreakpointsCommandId" priority="0x0200" type="Button">
+        <Parent guid="guidPackageCmdSet" id="KLExtensionsMenuGroup" />
+        <Icon guid="ImageCatalogGuid" id="EnableAllBreakpoints"/>
+        <CommandFlag>IconIsMoniker</CommandFlag>
+        <Strings>
+          <CommandName>SetAllMethodsBreakpointsCommand</CommandName>
+          <ButtonText>Set Breakpoints For All Methods</ButtonText>
+        </Strings>
+      </Button>  
       <Button guid="guidPackageSurroundWithCmdSet" id="SurroundWithBraceCommandId" priority="0x0100" type="Button">
         <Parent guid="guidPackageSurroundWithCmdSet" id="SurroundWithItemsMenuGroup" />
         <Icon guid="guidImages" id="bmpPic5" />
@@ -166,8 +175,7 @@
           <CommandName>RemoveEmptyLinesCommand</CommandName>
           <ButtonText>Remove Empty Lines</ButtonText>
         </Strings>
-      </Button>
-      
+      </Button>     
       <Button guid="guidPackageCmdSet" id="AddPublicClassCommandId" priority="0x0200" type="Button">
         <Parent guid="guidSHLMainMenu" id="IDG_VS_CTXT_PROJECT_ADD_ITEMS"/>
         <Icon guid="guidImages2" id="bmpPic11" />
@@ -177,7 +185,6 @@
           <ButtonText>New Public Class...</ButtonText>
         </Strings>
       </Button>
-
       <Button guid="guidPackageEditContextCmdSet" id="SelectMoveToFunctionCommandId" priority="0x0101" type="Button">
         <Parent guid="guidPackageEditContextCmdSet" id="SelectItemsMenuGroup" />
         <Icon guid="guidImages3" id="bmpPic17" />
@@ -218,6 +225,7 @@
   <KeyBindings>
     <KeyBinding guid="guidPackageCmdSet" id="RemoveCommentCommandId" mod1="Control" key1="K" mod2="Control" key2="Q" editor="guidVSStd97" />
     <KeyBinding guid="guidPackageCmdSet" id="RemoveRegionsCommandId" mod1="Control" key1="K" mod2="Control" key2="R" editor="guidVSStd97" />
+    <KeyBinding guid="guidPackageCmdSet" id="SetAllMethodsBreakpointsCommandId" mod1="Control" key1="K" mod2="Control" key2="B" editor="guidVSStd97" />
     <KeyBinding guid="guidPackageCmdSet" id="AddPublicClassCommandId" mod1="Shift" key1="VK_F2" editor="guidVSStd97"/>
     <KeyBinding guid="guidPackageSurroundWithCmdSet" id="SurroundWithBraceCommandId" mod1="Control Shift" key1="0xDB" editor="guidVSStd97" />
     <KeyBinding guid="guidPackageSurroundWithCmdSet" id="SurroundWithParenthesisCommandId" mod1="Control Shift" key1="0x39" editor="guidVSStd97" />
@@ -242,6 +250,7 @@
       <IDSymbol name="RemoveCommentCommandId" value="0x0100" />
       <IDSymbol name="RemoveRegionsCommandId" value="0x0200" />
       <IDSymbol name="AddPublicClassCommandId" value="0x0210"/>
+      <IDSymbol name="SetAllMethodsBreakpointsCommandId" value="0x0220"/>
     </GuidSymbol>
 
     <GuidSymbol name="guidPackageSurroundWithCmdSet" value="{060f8145-dd46-4faa-ab59-dfdbeea72dcc}">
@@ -271,14 +280,6 @@
       <IDSymbol name="SelectItemsMenuGroup" value="562" />
       <IDSymbol name="SelectMoveToFunctionCommandId" value="563"/>
     </GuidSymbol>
-    
-    <!--<GuidSymbol name="guidPackageSelectContextCmdSet" value="{60ee3729-2e5c-4bdd-80ac-2e0db4141e7d}">
-      <IDSymbol name="SelectMenuGroup" value="5130" />
-      <IDSymbol name="SelectSubMenu" value="561" />
-      <IDSymbol name="SelectItemsMenuGroup" value="562" />
-      <IDSymbol name="SelectMoveToFunctionCommandId" value="563"/>
-    </GuidSymbol>-->
-    
 
     <GuidSymbol name="guidImages" value="{d8bf0f90-62ba-4911-b5a7-3cac6baa0d50}">
       <IDSymbol name="bmpPic1" value="1" />

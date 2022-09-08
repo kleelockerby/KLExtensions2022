@@ -22,6 +22,35 @@ namespace KLExtensions2022
         public static IComponentModel ComponentModel;
         public static JoinableTaskFactory JoinTaskFactory;
 
+        //private DTE2 ide;
+        //public DTE2 IDE => ide ?? (ide = (DTE2)GetService(typeof(DTE)));
+
+        public Document ActiveDocument
+        {
+            get
+            {
+                try
+                {
+                    return DTE2.ActiveDocument;
+                }
+                catch (Exception)
+                {
+                    return null;
+                }
+            }
+        }
+
+        public TextDocument ActiveTextDocument => GetTextDocument(this.ActiveDocument);
+
+        internal TextDocument GetTextDocument(Document document)
+        {
+            if (document == null)
+            {
+                return null;
+            }
+            return document.Object("TextDocument") as TextDocument;
+        }
+
         protected override async Task InitializeAsync(CancellationToken cancellationToken, IProgress<ServiceProgressData> progress)
         {
             await this.JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
@@ -44,6 +73,7 @@ namespace KLExtensions2022
             await SortLinesCommand.InitializeAsync(this);
             await SelectMoveToFunctionCommand.InitializeAsync(this);
             await RemoveEmptyLinesCommand.InitializeAsync(this);
+            await SetAllMethodsBreakpointsCommand.InitializeAsync(this);
         }
     }
 }
