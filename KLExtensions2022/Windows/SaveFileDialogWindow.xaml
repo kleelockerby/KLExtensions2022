@@ -10,22 +10,65 @@
              d:DesignHeight="450" d:DesignWidth="600" KeyDown="Window_KeyDown">
     <Grid>
         <StackPanel >
-            <Grid  Margin="6"   >
+            <Grid Margin="6 10 10 5">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="40*"/>
                     <ColumnDefinition Width="80*"/>
                 </Grid.ColumnDefinitions>
-                <Label x:Name="lblText" Grid.Column="0">Label</Label>
+                <Label x:Name="lblText" Grid.Column="0"></Label>
                 <TextBox Grid.Column="1" x:Name="txtName"></TextBox>
             </Grid>
-            <StackPanel  Margin="6" HorizontalAlignment="Center" Orientation="Horizontal" VerticalAlignment="Center">
+            <StackPanel Margin="0" HorizontalAlignment="Center" Orientation="Horizontal" VerticalAlignment="Center">
                 <RadioButton Name="btnProject" Margin="10,5,0,0" GroupName="NameSpaceType" IsChecked="true">Project</RadioButton>
                 <RadioButton Name="btnFolder" Margin="10,5,0,0" GroupName="NameSpaceType">Folder</RadioButton>
             </StackPanel>
+        </StackPanel>
+        <StackPanel>
+            <Grid Margin="0 50 0 0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="40*"/>
+                    <ColumnDefinition Width="80*"/>
+                </Grid.ColumnDefinitions>
+                <Label x:Name="lblUsing" Margin="6 20 0 0" Grid.Column="0">Implicity Usings</Label>
+                <StackPanel Grid.Column="1" Margin="18 20" HorizontalAlignment="Left" Orientation="Horizontal" VerticalAlignment="Center">
+                    <RadioButton Name="btnUsingsTrue" Margin="10,5,0,0" GroupName="UsingsType" IsChecked="true">True</RadioButton>
+                    <RadioButton Name="btnUsingsFalse" Margin="10,5,0,0" GroupName="UsingsType">False</RadioButton>
+                </StackPanel>
+            </Grid>
+            <StackPanel Margin="6 0"  HorizontalAlignment="Center" Orientation="Horizontal">
+                <Button MinWidth="45" Click="Button_Click" Margin="0,0,6,0" >Cancel</Button>
+                <Button MinWidth="45" Click="Button_Click_1" Margin="0,0,6,0"  >Ok</Button>
+            </StackPanel>
+        </StackPanel>
+       
+        
+        <!--
+ 
+        <StackPanel>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="40*"/>
+                    <ColumnDefinition Width="80*"/>
+                </Grid.ColumnDefinitions>
+                <Label x:Name="lblUsing" Grid.Column="0">Implicity Usings</Label>
+            </Grid>
+        </StackPanel>-->
+        <!--
+        L T R B
+        <StackPanel>
+          
+            <StackPanel  Margin="6" HorizontalAlignment="Left" Orientation="Horizontal" VerticalAlignment="Center">
+                <Label x:Name="lblUsing" Grid.Column="0">Implicity Usings</Label>
+            </StackPanel>
+            <StackPanel  Margin="6" HorizontalAlignment="Center" Orientation="Horizontal" VerticalAlignment="Center">
+                <RadioButton Name="btnUsingsTrue" Margin="10,5,0,0" GroupName="UsingsType" IsChecked="true">True</RadioButton>
+                <RadioButton Name="btnUsingsFalse" Margin="10,5,0,0" GroupName="UsingsType">False</RadioButton>
+            </StackPanel>
+            
             <StackPanel  Margin="6"  HorizontalAlignment="Right" Orientation="Horizontal">
                 <Button  MinWidth="45" Click="Button_Click" Margin="0,0,6,0" >Cancel</Button>
                 <Button MinWidth="45" Click="Button_Click_1" Margin="0,0,6,0"  >Ok</Button>
             </StackPanel>
-        </StackPanel>
+        </StackPanel>-->
     </Grid>
 </local:BaseDialogWindow>

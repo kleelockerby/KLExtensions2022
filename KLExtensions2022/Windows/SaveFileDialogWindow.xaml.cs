@@ -16,6 +16,7 @@ namespace KLExtensions2022
         public Func<string, Task> ActionToDo { get; set; } = null;
         public Action ActionToClose { get; set; } = null;
         public string NameSpaceType { get; set; }
+        public string UsingsType { get; set; }
 
         public SaveFileDialogWindow(string labelName, string fileName, Func<string, Task> actionToDo)
         {
@@ -24,6 +25,7 @@ namespace KLExtensions2022
             this.txtName.Text = fileName;
             this.ActionToDo = actionToDo;
             GetNameSpaceType();
+            GetUsingsType();
             txtName.Focus();
             txtName.SelectAll();
         }
@@ -34,6 +36,7 @@ namespace KLExtensions2022
             this.lblText.Content = labelName;
             this.txtName.Text = fileName;
             GetNameSpaceType();
+            GetUsingsType();
             txtName.Focus();
             txtName.SelectAll();
         }
@@ -57,6 +60,7 @@ namespace KLExtensions2022
             {
                 DialogResult = true;
                 GetNameSpaceType();
+                GetUsingsType();
                 if (ActionToClose == null)
                 {
                     Close();
@@ -81,12 +85,25 @@ namespace KLExtensions2022
             }
         }
 
+        private void GetUsingsType()
+        {
+            if(btnUsingsTrue.IsChecked == true)
+            {
+                this.UsingsType = "true";
+            }
+            else
+            {
+                this.UsingsType = "false";
+            }
+        }
+
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Return)
             {
                 DialogResult = true;
                 GetNameSpaceType();
+                GetUsingsType();
                 if (ActionToClose == null)
                 {
                     Close();

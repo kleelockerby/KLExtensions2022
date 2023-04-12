@@ -34,6 +34,7 @@ namespace KLExtensions2022
         public string NameSpace { get; set; }
         public string RootFolder { get; set; }
         public string FileFolder { get; set; }
+        public string UsingsType { get; set; }
         public bool IsSolutionOrSolutionFolder { get; }
         public bool IsSolution => IsSolutionOrSolutionFolder && Project == null;
         public bool IsSolutionFolder => IsSolutionOrSolutionFolder && Project != null;
@@ -61,11 +62,6 @@ namespace KLExtensions2022
                 this.FileFolder = fileFolder.Remove(lastIndex, 1);
             }
             this.NameSpace = project.Name;
-
-            //if (!string.IsNullOrEmpty(this.FileFolder))
-            //{
-            //    this.NameSpace += "." + this.FileFolder;
-            //}
 
             string rootNameSpace = project.GetRootNamespace();
         }

@@ -60,7 +60,7 @@ namespace KLExtensions2022
             ThreadHelper.ThrowIfNotOnUIThread();
 
             NewItemTarget target = NewItemTarget.Create(DTE2);
-            if (target == null)
+            if(target == null)
             {
                 MessageBox.Show(
                         "Could not determine where to create the new file. Select a file or folder in Solution Explorer and try again.",
@@ -71,20 +71,21 @@ namespace KLExtensions2022
             }
 
             string fileName = "class1.cs";
-            string input = PromptForFileName(fileName, out string nameSpaceType);
-            if (string.IsNullOrEmpty(input))
+            string input = PromptForFileName(fileName, out string nameSpaceType, out string usingsType);
+            if(string.IsNullOrEmpty(input))
             {
                 return;
             }
 
-            if (nameSpaceType == "Folder")
+            if(nameSpaceType == "Folder")
             {
-                if (!string.IsNullOrEmpty(target.FileFolder))
+                if(!string.IsNullOrEmpty(target.FileFolder))
                 {
-                    target.NameSpace +=  "." + target.FileFolder;
+                    string nameSpace = target.FileFolder.Replace("\\", ".");
+                    target.NameSpace += "." + nameSpace;
                 }
             }
-
+            target.UsingsType = usingsType;
             AddItemAsync(input, target).Forget();
         }
 
@@ -95,13 +96,13 @@ namespace KLExtensions2022
             {
                 FileHelper.ValidatePath(fileName);
                 string name = fileName;
-                if (fileName.IndexOf(".cs") == -1)
+                if(fileName.IndexOf(".cs") == -1)
                 {
                     name = $"{fileName}.cs";
                 }
 
                 FileInfo file;
-                if (target.IsSolutionFolder && !Directory.Exists(target.Directory))
+                if(target.IsSolutionFolder && !Directory.Exists(target.Directory))
                 {
                     file = new FileInfo(Path.Combine(Path.GetDirectoryName(DTE2.Solution.FullName), Path.GetFileName(name)));
                 }
@@ -112,12 +113,12 @@ namespace KLExtensions2022
 
                 Directory.CreateDirectory(file.DirectoryName);
 
-                if (!file.Exists)
+                if(!file.Exists)
                 {
                     Project project = target.Project;
-                    int position = await WriteFileAsync(file.FullName, name, target.NameSpace);
+                    int position = await WriteFileAsync(file.FullName, name, target.NameSpace, target.UsingsType);
 
-                    if (target.ProjectItem != null && target.ProjectItem.IsKind(EnvDTE.Constants.vsProjectItemKindVirtualFolder))
+                    if(target.ProjectItem != null && target.ProjectItem.IsKind(EnvDTE.Constants.vsProjectItemKindVirtualFolder))
                     {
                         target.ProjectItem.ProjectItems.AddFromFile(file.FullName);
                     }
@@ -127,11 +128,11 @@ namespace KLExtensions2022
                     }
 
                     VsShellUtilities.OpenDocument(ServiceProvider, file.FullName);
-                    if (position > 0)
+                    if(position > 0)
                     {
                         IWpfTextView view = ProjectHelpers.GetCurentTextView();
 
-                        if (view != null)
+                        if(view != null)
                         {
                             view.Caret.MoveTo(new SnapshotPoint(view.TextBuffer.CurrentSnapshot, position));
                         }
@@ -141,13 +142,13 @@ namespace KLExtensions2022
                 }
 
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }
         }
 
-        private string PromptForFileName(string fileName, out string nameSpaceType)
+        private string PromptForFileName(string fileName, out string nameSpaceType, out string usingsType)
         {
             var xamlDialog = new SaveFileDialogWindow("Class Name: ", fileName)
             {
@@ -156,23 +157,24 @@ namespace KLExtensions2022
             xamlDialog.HasMinimizeButton = false;
             xamlDialog.HasMaximizeButton = false;
             xamlDialog.MaxHeight = 180;
-            xamlDialog.MinHeight = 140;
+            xamlDialog.MinHeight = 170;
             xamlDialog.MaxWidth = 500;
             xamlDialog.MinWidth = 500;
             xamlDialog.Title = "Move To New ViewModel File";
             bool? result = xamlDialog.ShowDialog();
             nameSpaceType = xamlDialog.NameSpaceType;
+            usingsType = xamlDialog.UsingsType;
             return (result.HasValue && result.Value) ? xamlDialog.Input : string.Empty;
         }
 
-        private static async Task<int> WriteFileAsync(string fileNameAndPath, string fileName, string nameSpace)
+        private static async Task<int> WriteFileAsync(string fileNameAndPath, string fileName, string nameSpace, string usingsType)
         {
-            string template = CreateClassFile(fileName, nameSpace);
+            string template = CreateClassFile(fileName, nameSpace, usingsType);
 
-            if (!string.IsNullOrEmpty(template))
+            if(!string.IsNullOrEmpty(template))
             {
                 int index = template.IndexOf('$');
-                if (index > -1)
+                if(index > -1)
                 {
                     template = template.Remove(index, 1);
                 }
@@ -185,13 +187,12 @@ namespace KLExtensions2022
             return 0;
         }
 
-        internal static string CreateClassFile(string name, string nameSpace)
+        internal static string CreateClassFile(string name, string nameSpace, string usingsType)
         {
             string className = name.RemoveFileNameExtension();
-            string content = CSharpTemplate.Content;
+            string content = (usingsType == "true") ? CSharpTemplate.ContentUsings : CSharpTemplate.ContentNoUsings;
             content = content.Replace("%NAMESPACE%", nameSpace).Replace("%FILENAME%", className);
             return FileHelper.NormalizeLineEndings(content);
         }
-
     }
 }
