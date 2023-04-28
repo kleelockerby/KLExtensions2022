@@ -204,27 +204,15 @@
                 <CommandFlag>IconIsMoniker</CommandFlag>
                 <CommandFlag>DynamicVisibility</CommandFlag>
                 <Strings>
-                    <!--<CommandName>InsertGuidCommand</CommandName>-->
                     <ButtonText>Insert Guid</ButtonText>
                 </Strings>
             </Button>
-
-
-            <!--<Button guid="guidKLExtensions2022PackageCmdSet" id="cmdidInsertGuidCommand" priority="0x0100" type="Button">
-                <Parent guid="guidKLExtensions2022PackageCmdSet" id="MyMenuGroup" />
-                <Icon guid="guidImages1" id="bmpPic1" />
-                <Strings>
-                    <ButtonText>Invoke InsertGuidCommand</ButtonText>
-                </Strings>
-            </Button>-->
         </Buttons>
 
         <Bitmaps>
             <Bitmap guid="guidImages" href="Resources\KLExtensionCommand.png" usedList="bmpPic1, bmpPic2, bmpPic3, bmpPic4, bmpPic5, bmpPic6" />
             <Bitmap guid="guidImages2" href="Resources\KLExtensionsEdit.png" usedList="bmpPic7, bmpPic8, bmpPic9, bmpPic10, bmpPic11, bmpPic12" />
             <Bitmap guid="guidImages3" href="Resources\KLExtensionsEdit2.png" usedList="bmpPic13, bmpPic14, bmpPic15, bmpPic16" />
-            <!--7 Join LInes, 8 Convert to Full Property, 9 Convert Auto Property, 10 Var to strong Type, 11 Add Class, 12 Select Whole Line, 13 Copy without indentation, 14 - Convert UpperCase, 15, Convert LowerCase, 16 Convert ToSentenceCase -->
-            <!--<Bitmap guid="guidImages1" href="Commands\Insert\Resources\InsertGuidCommand.png" usedList="bmpPic1, bmpPic2, bmpPicSearch, bmpPicX, bmpPicArrows, bmpPicStrikethrough" />-->
         </Bitmaps>
     </Commands>
 
@@ -333,19 +321,5 @@
             <IDSymbol name="bmpPic16" value="4" />
             <IDSymbol name="bmpPic17" value="5" />
         </GuidSymbol>
-
-        <!--<GuidSymbol value="{6b37f973-8d88-4220-838f-fd4c42af5c91}" name="guidKLExtensions2022PackageCmdSet">
-      <IDSymbol value="4128" name="MyMenuGroup" />
-      <IDSymbol value="256" name="cmdidInsertGuidCommand" />
-    </GuidSymbol>-->
-
-        <!--<GuidSymbol value="{aace66a1-efac-47a9-82bd-294ffac5ba71}" name="guidImages1">
-            <IDSymbol name="bmpPic1" value="1" />
-            <IDSymbol name="bmpPic2" value="2" />
-            <IDSymbol name="bmpPicSearch" value="3" />
-            <IDSymbol name="bmpPicX" value="4" />
-            <IDSymbol name="bmpPicArrows" value="5" />
-            <IDSymbol name="bmpPicStrikethrough" value="6" />
-        </GuidSymbol>-->
     </Symbols>
 </CommandTable>
