@@ -52,6 +52,7 @@
     <Compile Include="Commands\Edit\EditJoinLinesCommand.cs" />
     <Compile Include="Commands\ExecuteCommand.cs" />
     <Compile Include="Commands\Edit\LowerTitleCaseCommand.cs" />
+    <Compile Include="Commands\Insert\InsertGuidCommand.cs" />
     <Compile Include="Commands\RemoveCommentCommand.cs" />
     <Compile Include="Commands\RemoveEmptyLinesCommand.cs" />
     <Compile Include="Commands\RemoveRegionsCommand.cs" />
@@ -131,6 +132,7 @@
     </VSCTCompile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\EnableAllBreakpoints.png" />
     <Content Include="Resources\KLExtension.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
