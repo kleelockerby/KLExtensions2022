@@ -66,6 +66,7 @@ namespace KLExtensions2022
         public const int SelectItemsMenuGroup = 0x0232;
         public const int SelectMoveToFunctionCommandId = 0x0233;
         public const int InsertGuidCommandId = 0x0234;
+        public const int DuplicateAndCommentCommandId = 0x0235;
         public const int bmpPic1 = 0x0001;
         public const int bmpPic2 = 0x0002;
         public const int bmpPic3 = 0x0003;

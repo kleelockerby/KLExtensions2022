@@ -56,9 +56,7 @@
             <Group guid="guidPackageEditContextCmdSet" id="SelectItemsMenuGroup" priority="0x0600">
                 <Parent guid="guidPackageEditContextCmdSet" id="SelectSubMenu" />
             </Group>
-            <!--<Group guid="guidKLExtensions2022PackageCmdSet" id="MyMenuGroup" priority="0x0600">
-                <Parent guid="guidSHLMainMenu" id="IDM_VS_MENU_TOOLS" />
-            </Group>-->
+
         </Groups>
 
         <Buttons>
@@ -207,6 +205,16 @@
                     <ButtonText>Insert Guid</ButtonText>
                 </Strings>
             </Button>
+
+            <Button guid="guidPackageEditContextCmdSet" id="DuplicateAndCommentCommandId" priority="0x0105" type="Button">
+                <Parent guid="guidPackageEditContextCmdSet" id="SelectItemsMenuGroup" />
+                <Icon guid="ImageCatalogGuid" id="CopyItem"/>
+                <CommandFlag>IconIsMoniker</CommandFlag>
+                <CommandFlag>DynamicVisibility</CommandFlag>
+                <Strings>
+                    <ButtonText>Duplicate and Comment</ButtonText>
+                </Strings>
+            </Button>
         </Buttons>
 
         <Bitmaps>
@@ -252,6 +260,7 @@
         <KeyBinding guid="guidPackageEditContextCmdSet" id="EditSortLinesDescCommandId" mod1="Alt" key1="L" mod2="Alt" key2="D" editor="guidVSStd97" />
         <KeyBinding guid="guidPackageEditContextCmdSet" id="SelectMoveToFunctionCommandId" mod1="Control" key1="M" mod2="Control" key2="Z" editor="guidVSStd97" />
         <KeyBinding guid="guidPackageEditContextCmdSet" id="InsertGuidCommandId" mod1="Control" key1="K" mod2="Control" key2="VK_SPACE" editor="guidVSStd97" />
+        <KeyBinding guid="guidPackageEditContextCmdSet" id="DuplicateAndCommentCommandId" key1="VK_INSERT" mod1="Shift" editor="guidVSStd97" />
     </KeyBindings>
 
     <Symbols>
@@ -294,6 +303,7 @@
             <IDSymbol name="SelectItemsMenuGroup" value="562" />
             <IDSymbol name="SelectMoveToFunctionCommandId" value="563" />
             <IDSymbol name="InsertGuidCommandId" value="564" />
+            <IDSymbol name="DuplicateAndCommentCommandId" value="565"/>
         </GuidSymbol>
 
         <GuidSymbol name="guidImages" value="{d8bf0f90-62ba-4911-b5a7-3cac6baa0d50}">

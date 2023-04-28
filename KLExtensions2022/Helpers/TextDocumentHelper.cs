@@ -4,11 +4,18 @@ using System.Collections.Generic;
 using KLExtensions2022.Extensions;
 using Microsoft.VisualStudio.Shell;
 using System.Text.RegularExpressions;
+using EnvDTE80;
+using Microsoft.VisualStudio.Shell.Interop;
+using Microsoft.VisualStudio.Text.Editor;
+using System.Linq;
+using Microsoft.VisualStudio.Text;
 
 namespace KLExtensions2022.Helpers
 {
     public static class TextDocumentHelper
     {
+        private static readonly DTE2 Dte2 = KLExtensions2022Package.DTE2 as DTE2;
+        internal static string commentPreffix = "// ";
         internal const int StandardFindOptions = (int)(vsFindOptions.vsFindOptionsRegularExpression | vsFindOptions.vsFindOptionsMatchInHiddenText);
 
         internal static IEnumerable<EditPoint> FindMatches(TextDocument textDocument, string patternString)
@@ -160,7 +167,6 @@ namespace KLExtensions2022.Helpers
             }
         }
 
-
         internal static string NormalizeLineEndings(string content)
         {
             if (string.IsNullOrEmpty(content))
@@ -168,6 +174,100 @@ namespace KLExtensions2022.Helpers
                 return content;
             }
             return Regex.Replace(content, @"\r\n|\n\r|\n|\r", "\r\n");
+        }
+
+        internal static void RefreshComment()
+        {
+            var textDocument = Dte2.ActiveDocument.Object("TextDocument") as TextDocument;
+            commentPreffix = "# ";
+        }
+
+        internal static void Swap<T>(ref T a, ref T b)
+        {
+            T temp = b;
+            b = a;
+            a = temp;
+        }
+
+        internal static int GetCaretPosition(this IWpfTextView obj)
+        {
+            return obj.Caret.Position.BufferPosition;
+        }
+
+        public static string Comment(this string text)
+        {
+            var textLines = text.Replace(Environment.NewLine, "\n").Split('\n')
+                                .Select(x => new
+                                {
+                                    Text = x,
+                                    TextStart = x.IndexOfNonWhitespace(),
+                                    IsEmpty = (x == "")
+                                });
+
+            int indent = textLines.Where(x => !x.IsEmpty).Min(x => x.TextStart);
+            string[] replacementLines = textLines.Select(x =>
+            {
+                if(x.IsEmpty)
+                    return x.Text;
+                else
+                    return x.Text.CommentText(indent, true);
+            }).ToArray();
+
+            var commentedText = string.Join(Environment.NewLine, replacementLines);
+            return commentedText;
+        }
+
+        public static int IndexOfNonWhitespace(this string text)
+        {
+            return text.TakeWhile(c => char.IsWhiteSpace(c)).Count();
+        }
+
+        public static string CommentText(this string text, int indent, bool doComment)
+        {
+            int textStart = text.IndexOfNonWhitespace();
+
+            if(doComment)
+            {
+                if(textStart < indent)
+                    return new string(' ', indent - textStart) + commentPreffix + text.Substring(textStart);
+                else
+                    return text.Substring(0, indent) + commentPreffix + text.Substring(indent);
+            }
+            else
+            {
+                return text.Substring(0, textStart) + text.Substring(textStart).TrimCommentPreffix();
+            }
+        }
+
+        static public string TrimCommentPreffix(this string text)
+        {
+            if(text.StartsWith(commentPreffix))
+                return text.Substring(commentPreffix.Length);
+            else
+                return text;
+        }
+
+        public static ITextSnapshotLine GetLine(this IWpfTextView obj, int lineNumber)
+        {
+            return obj.TextSnapshot.GetLineFromLineNumber(lineNumber);
+        }
+
+        public static void SetSelection(this IWpfTextView obj, int start, int length)
+        {
+            SnapshotPoint selectionStart = new SnapshotPoint(obj.TextSnapshot, start);
+            var selectionSpan = new SnapshotSpan(selectionStart, length);
+
+            obj.Selection.Select(selectionSpan, false);
+        }
+
+        public static void MoveCaretTo(this IWpfTextView obj, int position)
+        {
+            obj.Caret.MoveTo(new SnapshotPoint(obj.TextSnapshot, position));
+        }
+
+        public static string GetText(this IWpfTextView obj)
+        {
+            return obj.TextSnapshot.GetText();
         }
     }
 }

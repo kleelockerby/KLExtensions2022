@@ -91,5 +91,6 @@ namespace KLExtensions2022
 		{
 			return string.IsNullOrWhiteSpace(value);
 		}
-	}
+
+    }
 }
