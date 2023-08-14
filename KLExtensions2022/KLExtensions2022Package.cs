@@ -76,6 +76,7 @@ namespace KLExtensions2022
             await SetAllMethodsBreakpointsCommand.InitializeAsync(this);
             await InsertGuidCommand.InitializeAsync(this);
             await DuplicateAndCopyCommand.InitializeAsync(this);
+            await CreateObjectInitializerCommand.InitializeAsync(this);
         }
     }
 }

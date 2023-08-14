@@ -24,6 +24,9 @@ namespace KLExtensions2022
         public const string guidPackageEditContextCmdSetString = "707f8641-5997-4761-a5f4-8194ea23f878";
         public static Guid guidPackageEditContextCmdSet = new Guid(guidPackageEditContextCmdSetString);
 
+        public const string guidPackageCreateContextCmdSetString = "d9b63116-6852-4d49-8184-9d3c930148cb";
+        public static Guid guidPackageCreateContextCmdSet = new Guid(guidPackageCreateContextCmdSetString);
+
         public const string guidImagesString = "d8bf0f90-62ba-4911-b5a7-3cac6baa0d50";
         public static Guid guidImages = new Guid(guidImagesString);
 
@@ -32,6 +35,9 @@ namespace KLExtensions2022
 
         public const string guidImages3String = "9cf6d5c0-9768-421c-adfa-312091903d1a";
         public static Guid guidImages3 = new Guid(guidImages3String);
+
+        public const string guidImagesCreateString = "7d18561b-8b04-45e6-97b4-17fe6467bd43";
+        public static Guid guidImagesCreate = new Guid(guidImagesCreateString);
     }
     /// <summary>
     /// Helper class that encapsulates all CommandIDs uses across VS Package.
@@ -67,6 +73,10 @@ namespace KLExtensions2022
         public const int SelectMoveToFunctionCommandId = 0x0233;
         public const int InsertGuidCommandId = 0x0234;
         public const int DuplicateAndCommentCommandId = 0x0235;
+        public const int CreateMenuGroup = 0x0140;
+        public const int CreateSubMenu = 0x0141;
+        public const int CreateItemsMenuGroup = 0x0142;
+        public const int CreateObjectInitializerCommandId = 0x0143;
         public const int bmpPic1 = 0x0001;
         public const int bmpPic2 = 0x0002;
         public const int bmpPic3 = 0x0003;
@@ -84,5 +94,7 @@ namespace KLExtensions2022
         public const int bmpPic15 = 0x0003;
         public const int bmpPic16 = 0x0004;
         public const int bmpPic17 = 0x0005;
+        public const int bmpObjInit = 0x0001;
+        public const int bmpCollInit = 0x0002;
     }
 }

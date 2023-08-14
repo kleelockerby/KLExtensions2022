@@ -31,6 +31,13 @@
                     <ButtonText>Select</ButtonText>
                 </Strings>
             </Menu>
+
+            <Menu guid="guidPackageCreateContextCmdSet" id="CreateSubMenu" priority="0x0101" type="Menu">
+                <Parent guid="guidPackageCreateContextCmdSet" id="CreateMenuGroup" />
+                <Strings>
+                    <ButtonText>Create</ButtonText>
+                </Strings>
+            </Menu>
         </Menus>
 
         <Groups>
@@ -56,7 +63,13 @@
             <Group guid="guidPackageEditContextCmdSet" id="SelectItemsMenuGroup" priority="0x0600">
                 <Parent guid="guidPackageEditContextCmdSet" id="SelectSubMenu" />
             </Group>
+            <Group guid="guidPackageCreateContextCmdSet" id="CreateMenuGroup" priority="0x0600">
+                <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_CODEWIN" />
+            </Group>
 
+            <Group guid="guidPackageCreateContextCmdSet" id="CreateItemsMenuGroup" priority="0x0600">
+                <Parent guid="guidPackageCreateContextCmdSet" id="CreateSubMenu" />
+            </Group>
         </Groups>
 
         <Buttons>
@@ -215,6 +228,14 @@
                     <ButtonText>Duplicate and Comment</ButtonText>
                 </Strings>
             </Button>
+            <Button guid="guidPackageCreateContextCmdSet" id="CreateObjectInitializerCommandId" priority="0x0101" type="Button">
+                <Parent guid="guidPackageCreateContextCmdSet" id="CreateItemsMenuGroup" />
+                <Icon guid="guidImagesCreate" id="bmpObjInit" />
+                <Strings>
+                    <CommandName>CreateObjectInitializerCommand</CommandName>
+                    <ButtonText>Create Object Initializer</ButtonText>
+                </Strings>
+            </Button>
         </Buttons>
 
         <Bitmaps>
@@ -306,6 +327,13 @@
             <IDSymbol name="DuplicateAndCommentCommandId" value="565"/>
         </GuidSymbol>
 
+        <GuidSymbol name="guidPackageCreateContextCmdSet" value="{d9b63116-6852-4d49-8184-9d3c930148cb}">
+            <IDSymbol name="CreateMenuGroup" value="320" />
+            <IDSymbol name="CreateSubMenu" value="321" />
+            <IDSymbol name="CreateItemsMenuGroup" value="322" />
+            <IDSymbol name="CreateObjectInitializerCommandId" value="323" />
+        </GuidSymbol>
+
         <GuidSymbol name="guidImages" value="{d8bf0f90-62ba-4911-b5a7-3cac6baa0d50}">
             <IDSymbol name="bmpPic1" value="1" />
             <IDSymbol name="bmpPic2" value="2" />
@@ -330,6 +358,11 @@
             <IDSymbol name="bmpPic15" value="3" />
             <IDSymbol name="bmpPic16" value="4" />
             <IDSymbol name="bmpPic17" value="5" />
+        </GuidSymbol>
+
+        <GuidSymbol name="guidImagesCreate" value="{7d18561b-8b04-45e6-97b4-17fe6467bd43}">
+            <IDSymbol name="bmpObjInit" value="1" />
+            <IDSymbol name="bmpCollInit" value="2" />
         </GuidSymbol>
     </Symbols>
 </CommandTable>
