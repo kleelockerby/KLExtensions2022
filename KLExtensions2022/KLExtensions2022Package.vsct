@@ -209,15 +209,6 @@
                 </Strings>
             </Button>
 
-            <Button guid="guidPackageEditContextCmdSet" id="InsertGuidCommandId" priority="0x0104" type="Button">
-                <Parent guid="guidPackageEditContextCmdSet" id="SelectItemsMenuGroup" />
-                <Icon guid="ImageCatalogGuid" id="PasteAppend"/>
-                <CommandFlag>IconIsMoniker</CommandFlag>
-                <CommandFlag>DynamicVisibility</CommandFlag>
-                <Strings>
-                    <ButtonText>Insert Guid</ButtonText>
-                </Strings>
-            </Button>
 
             <Button guid="guidPackageEditContextCmdSet" id="DuplicateAndCommentCommandId" priority="0x0105" type="Button">
                 <Parent guid="guidPackageEditContextCmdSet" id="SelectItemsMenuGroup" />
@@ -228,6 +219,17 @@
                     <ButtonText>Duplicate and Comment</ButtonText>
                 </Strings>
             </Button>
+            
+            <Button guid="guidPackageEditContextCmdSet" id="InsertGuidCommandId" priority="0x0104" type="Button">
+                <Parent guid="guidPackageCreateContextCmdSet" id="CreateItemsMenuGroup" />
+                <Icon guid="ImageCatalogGuid" id="PasteAppend"/>
+                <CommandFlag>IconIsMoniker</CommandFlag>
+                <CommandFlag>DynamicVisibility</CommandFlag>
+                <Strings>
+                    <ButtonText>Insert Guid</ButtonText>
+                </Strings>
+            </Button>
+
             <Button guid="guidPackageCreateContextCmdSet" id="CreateObjectInitializerCommandId" priority="0x0101" type="Button">
                 <Parent guid="guidPackageCreateContextCmdSet" id="CreateItemsMenuGroup" />
                 <Icon guid="guidImagesCreate" id="bmpObjInit" />
@@ -242,6 +244,7 @@
             <Bitmap guid="guidImages" href="Resources\KLExtensionCommand.png" usedList="bmpPic1, bmpPic2, bmpPic3, bmpPic4, bmpPic5, bmpPic6" />
             <Bitmap guid="guidImages2" href="Resources\KLExtensionsEdit.png" usedList="bmpPic7, bmpPic8, bmpPic9, bmpPic10, bmpPic11, bmpPic12" />
             <Bitmap guid="guidImages3" href="Resources\KLExtensionsEdit2.png" usedList="bmpPic13, bmpPic14, bmpPic15, bmpPic16" />
+            <Bitmap guid="guidImagesCreate" href="Resources\ObjectInitializer.png" usedList="bmpObjInit" />
         </Bitmaps>
     </Commands>
 

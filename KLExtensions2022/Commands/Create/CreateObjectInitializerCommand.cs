@@ -38,7 +38,11 @@ namespace KLExtensions2022
                 SnapshotPoint caretPosition = textView.Caret.Position.BufferPosition;
                 Document document = caretPosition.Snapshot.GetOpenDocumentInCurrentContextWithChanges();
 
-                IdentifierNameSyntax objectType = (await document.GetSyntaxRootAsync()).FindToken(caretPosition).Parent.AncestorsAndSelf().OfType<IdentifierNameSyntax>().FirstOrDefault();
+                IdentifierNameSyntax objectType = (await document.GetSyntaxRootAsync())
+                .FindToken(caretPosition)
+                .Parent.AncestorsAndSelf()
+                .OfType<IdentifierNameSyntax>()
+                .FirstOrDefault();
 
                 if (objectType != null)
                 {
