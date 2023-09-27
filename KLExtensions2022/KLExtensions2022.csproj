@@ -92,7 +92,11 @@
       <DependentUpon>KLExtensions2022Package.vsct</DependentUpon>
     </Compile>
     <Compile Include="Models\Member.cs" />
+    <Compile Include="Enums\NamespaceOptions.cs" />
     <Compile Include="Models\ProjectTypes.cs" />
+    <Compile Include="Options\OptionPageGrid.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="KLExtensions2022Package.cs" />
     <Compile Include="Templates\CSharpTemplate.cs" />

@@ -15,10 +15,10 @@ namespace KLExtensions2022
         public string Input => txtName.Text.Trim();
         public Func<string, Task> ActionToDo { get; set; } = null;
         public Action ActionToClose { get; set; } = null;
-        public string NameSpaceType { get; set; }
-        public string UsingsType { get; set; }
+        public NamespaceOptions NamespaceOptions { get; set; }
+        public bool UseImplicitUsings { get; set; }
 
-        public SaveFileDialogWindow(string labelName, string fileName, Func<string, Task> actionToDo)
+        public SaveFileDialogWindow (string labelName, string fileName, Func<string, Task> actionToDo)
         {
             InitializeComponent();
             this.lblText.Content = labelName;
@@ -30,7 +30,7 @@ namespace KLExtensions2022
             txtName.SelectAll();
         }
 
-        public SaveFileDialogWindow(string labelName, string fileName)
+        public SaveFileDialogWindow (string labelName, string fileName)
         {
             InitializeComponent();
             this.lblText.Content = labelName;
@@ -41,7 +41,20 @@ namespace KLExtensions2022
             txtName.SelectAll();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        public SaveFileDialogWindow(string labelName, string fileName, NamespaceOptions namespaceOptions, bool useImplicitUsings)
+        {
+            InitializeComponent();
+            this.lblText.Content = labelName;
+            this.txtName.Text = fileName;
+            this.NamespaceOptions = namespaceOptions;
+            this.UseImplicitUsings = useImplicitUsings;
+            GetNameSpaceType();
+            GetUsingsType();
+            txtName.Focus();
+            txtName.SelectAll();
+        }
+
+        private void Button_Click (object sender, RoutedEventArgs e)
         {
             DialogResult = false;
             if (ActionToClose == null)
@@ -54,7 +67,7 @@ namespace KLExtensions2022
             }
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        private void Button_Click_1 (object sender, RoutedEventArgs e)
         {
             if (!string.IsNullOrWhiteSpace(txtName.Text))
             {
@@ -68,36 +81,36 @@ namespace KLExtensions2022
                 else if (ActionToDo != null)
                 {
                     ActionToClose?.Invoke();
-                    ActionToDo?.Invoke(txtName.Text);
+                    _ = ActionToDo.Invoke(txtName.Text);
                 }
             }
         }
 
-        private void GetNameSpaceType()
+        private void GetNameSpaceType ()
         {
-            if (btnProject.IsChecked == true)
+            if (this.NamespaceOptions == NamespaceOptions.Project)
             {
-                this.NameSpaceType = "Project";
+                this.btnProject.IsChecked = true;
             }
             else
             {
-                this.NameSpaceType = "Folder";
+                this.btnFolder.IsChecked = true;
             }
         }
 
-        private void GetUsingsType()
+        private void GetUsingsType ()
         {
-            if(btnUsingsTrue.IsChecked == true)
+            if (this.UseImplicitUsings == true)
             {
-                this.UsingsType = "true";
+                this.btnUsingsTrue.IsChecked = true;
             }
             else
             {
-                this.UsingsType = "false";
+                this.btnUsingsFalse.IsChecked = true;
             }
         }
 
-        private void Window_KeyDown(object sender, KeyEventArgs e)
+        private void Window_KeyDown (object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Return)
             {
@@ -111,7 +124,7 @@ namespace KLExtensions2022
                 else if (ActionToDo != null)
                 {
                     ActionToClose?.Invoke();
-                    ActionToDo?.Invoke(txtName.Text);
+                    _ = ActionToDo.Invoke(txtName.Text);
                 }
             }
         }

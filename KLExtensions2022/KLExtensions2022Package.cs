@@ -13,6 +13,8 @@ namespace KLExtensions2022
 {
     [PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]
     [Guid(PackageGuids.guidPackageString)]
+    [InstalledProductRegistration("#110", "#112", "1.0", IconResourceID = 400)]
+    [ProvideOptionPage(typeof(OptionPageGrid), "Add New Class", "General", 0, 0, true)]
     [ProvideMenuResource("Menus.ctmenu", 1)]
     [ProvideAutoLoad(VSConstants.VsEditorFactoryGuid.TextEditor_string, PackageAutoLoadFlags.BackgroundLoad)]
     public sealed class KLExtensions2022Package : AsyncPackage
@@ -21,9 +23,6 @@ namespace KLExtensions2022
         public static DTE2 DTE2;
         public static IComponentModel ComponentModel;
         public static JoinableTaskFactory JoinTaskFactory;
-
-        //private DTE2 ide;
-        //public DTE2 IDE => ide ?? (ide = (DTE2)GetService(typeof(DTE)));
 
         public Document ActiveDocument
         {
@@ -37,6 +36,24 @@ namespace KLExtensions2022
                 {
                     return null;
                 }
+            }
+        }
+
+        public bool OptionUsings
+        {
+            get
+            {
+                OptionPageGrid optionPageGrid = (OptionPageGrid)GetDialogPage(typeof(OptionPageGrid));
+                return optionPageGrid.UsingsOption;
+            }
+        }
+
+        public NamespaceOptions OptionNamespace
+        {
+            get
+            {
+                OptionPageGrid optionPageGrid = (OptionPageGrid)GetDialogPage(typeof(OptionPageGrid));
+                return optionPageGrid.KLNamespaceOptions;
             }
         }
 

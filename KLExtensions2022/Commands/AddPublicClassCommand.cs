@@ -60,7 +60,7 @@ namespace KLExtensions2022
             ThreadHelper.ThrowIfNotOnUIThread();
 
             NewItemTarget target = NewItemTarget.Create(DTE2);
-            if(target == null)
+            if (target == null)
             {
                 MessageBox.Show(
                         "Could not determine where to create the new file. Select a file or folder in Solution Explorer and try again.",
@@ -70,22 +70,28 @@ namespace KLExtensions2022
                 return;
             }
 
+            KLExtensions2022Package kLExtensions2022Package = this.package as KLExtensions2022Package;
+            target.UseImplicitUsings = kLExtensions2022Package.OptionUsings;
+            target.NamespaceOptions = kLExtensions2022Package.OptionNamespace;
+
             string fileName = "class1.cs";
-            string input = PromptForFileName(fileName, out string nameSpaceType, out string usingsType);
-            if(string.IsNullOrEmpty(input))
+            // string input = PromptForFileName(fileName, out string nameSpaceType, out string usingsType);
+            string input = PromptForFileName(fileName, target, out NamespaceOptions namespaceOptions, out bool useImplicitUsings);
+            if (string.IsNullOrEmpty(input))
             {
                 return;
             }
 
-            if(nameSpaceType == "Folder")
+            if (namespaceOptions == NamespaceOptions.Folder)
             {
-                if(!string.IsNullOrEmpty(target.FileFolder))
+                if (!string.IsNullOrEmpty(target.FileFolder))
                 {
                     string nameSpace = target.FileFolder.Replace("\\", ".");
                     target.NameSpace += "." + nameSpace;
                 }
             }
-            target.UsingsType = usingsType;
+
+            target.UseImplicitUsings = useImplicitUsings;
             AddItemAsync(input, target).Forget();
         }
 
@@ -96,13 +102,13 @@ namespace KLExtensions2022
             {
                 FileHelper.ValidatePath(fileName);
                 string name = fileName;
-                if(fileName.IndexOf(".cs") == -1)
+                if (fileName.IndexOf(".cs") == -1)
                 {
                     name = $"{fileName}.cs";
                 }
 
                 FileInfo file;
-                if(target.IsSolutionFolder && !Directory.Exists(target.Directory))
+                if (target.IsSolutionFolder && !Directory.Exists(target.Directory))
                 {
                     file = new FileInfo(Path.Combine(Path.GetDirectoryName(DTE2.Solution.FullName), Path.GetFileName(name)));
                 }
@@ -113,12 +119,12 @@ namespace KLExtensions2022
 
                 Directory.CreateDirectory(file.DirectoryName);
 
-                if(!file.Exists)
+                if (!file.Exists)
                 {
                     Project project = target.Project;
-                    int position = await WriteFileAsync(file.FullName, name, target.NameSpace, target.UsingsType);
+                    int position = await WriteFileAsync(file.FullName, name, target.NameSpace, target.UseImplicitUsings);
 
-                    if(target.ProjectItem != null && target.ProjectItem.IsKind(EnvDTE.Constants.vsProjectItemKindVirtualFolder))
+                    if (target.ProjectItem != null && target.ProjectItem.IsKind(EnvDTE.Constants.vsProjectItemKindVirtualFolder))
                     {
                         target.ProjectItem.ProjectItems.AddFromFile(file.FullName);
                     }
@@ -128,11 +134,11 @@ namespace KLExtensions2022
                     }
 
                     VsShellUtilities.OpenDocument(ServiceProvider, file.FullName);
-                    if(position > 0)
+                    if (position > 0)
                     {
                         IWpfTextView view = ProjectHelpers.GetCurentTextView();
 
-                        if(view != null)
+                        if (view != null)
                         {
                             view.Caret.MoveTo(new SnapshotPoint(view.TextBuffer.CurrentSnapshot, position));
                         }
@@ -142,15 +148,15 @@ namespace KLExtensions2022
                 }
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }
         }
 
-        private string PromptForFileName(string fileName, out string nameSpaceType, out string usingsType)
+        private string PromptForFileName(string fileName, NewItemTarget target, out NamespaceOptions namespaceOption, out bool useImplicitUsings)
         {
-            var xamlDialog = new SaveFileDialogWindow("Class Name: ", fileName)
+            var xamlDialog = new SaveFileDialogWindow("Class Name: ", fileName, target.NamespaceOptions, target.UseImplicitUsings)
             {
                 Owner = Application.Current.MainWindow
             };
@@ -161,20 +167,33 @@ namespace KLExtensions2022
             xamlDialog.MaxWidth = 500;
             xamlDialog.MinWidth = 500;
             xamlDialog.Title = "Move To New ViewModel File";
+
             bool? result = xamlDialog.ShowDialog();
-            nameSpaceType = xamlDialog.NameSpaceType;
-            usingsType = xamlDialog.UsingsType;
+
+            if (xamlDialog.btnProject.IsChecked == true)
+                namespaceOption = NamespaceOptions.Project;
+            else
+                namespaceOption = NamespaceOptions.Folder;
+
+            if (xamlDialog.btnUsingsTrue.IsChecked == true)
+                useImplicitUsings = true;
+            else
+                useImplicitUsings = false;
+
+            namespaceOption = xamlDialog.NamespaceOptions;
+            useImplicitUsings = xamlDialog.UseImplicitUsings;
+
             return (result.HasValue && result.Value) ? xamlDialog.Input : string.Empty;
         }
 
-        private static async Task<int> WriteFileAsync(string fileNameAndPath, string fileName, string nameSpace, string usingsType)
+        private static async Task<int> WriteFileAsync(string fileNameAndPath, string fileName, string nameSpace, bool useImplicitUsings)
         {
-            string template = CreateClassFile(fileName, nameSpace, usingsType);
+            string template = CreateClassFile(fileName, nameSpace, useImplicitUsings);
 
-            if(!string.IsNullOrEmpty(template))
+            if (!string.IsNullOrEmpty(template))
             {
                 int index = template.IndexOf('$');
-                if(index > -1)
+                if (index > -1)
                 {
                     template = template.Remove(index, 1);
                 }
@@ -187,10 +206,10 @@ namespace KLExtensions2022
             return 0;
         }
 
-        internal static string CreateClassFile(string name, string nameSpace, string usingsType)
+        internal static string CreateClassFile(string name, string nameSpace, bool useImplicitUsings)
         {
             string className = name.RemoveFileNameExtension();
-            string content = (usingsType == "true") ? CSharpTemplate.ContentUsings : CSharpTemplate.ContentNoUsings;
+            string content = (useImplicitUsings == true) ? CSharpTemplate.ContentUsings : CSharpTemplate.ContentNoUsings;
             content = content.Replace("%NAMESPACE%", nameSpace).Replace("%FILENAME%", className);
             return FileHelper.NormalizeLineEndings(content);
         }
