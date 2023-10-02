@@ -36,6 +36,9 @@ namespace KLExtensions2022
         public const string guidImages3String = "9cf6d5c0-9768-421c-adfa-312091903d1a";
         public static Guid guidImages3 = new Guid(guidImages3String);
 
+        public const string guidImages4String = "23aa0ada-6644-47fd-9bce-30c622e0da69";
+        public static Guid guidImages4 = new Guid(guidImages4String);
+
         public const string guidImagesCreateString = "7d18561b-8b04-45e6-97b4-17fe6467bd43";
         public static Guid guidImagesCreate = new Guid(guidImagesCreateString);
     }
@@ -55,6 +58,8 @@ namespace KLExtensions2022
         public const int SurroundWithBraceCommandId = 0x00FE;
         public const int SurroundWithParenthesisCommandId = 0x00FF;
         public const int SurroundWithDoubleQuotesCommandId = 0x0100;
+        public const int SurroundWithIntStringCommandId = 0x0101;
+        public const int SurroundWithTaskBracketCommandId = 0x0103;
         public const int SurroundWithItemsMenuGroup = 0x0104;
         public const int EditMenuGroup = 0x1022;
         public const int EditSubMenu = 0x0105;
@@ -94,6 +99,8 @@ namespace KLExtensions2022
         public const int bmpPic15 = 0x0003;
         public const int bmpPic16 = 0x0004;
         public const int bmpPic17 = 0x0005;
+        public const int bmpPic18 = 0x0001;
+        public const int bmpPic19 = 0x0002;
         public const int bmpObjInit = 0x0001;
         public const int bmpCollInit = 0x0002;
     }

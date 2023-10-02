@@ -81,6 +81,8 @@ namespace KLExtensions2022
             await SelectionBracesCommand.InitializeAsync(this);
             await SelectionParenthesisCommand.InitializeAsync(this);
             await SelectionDoubleQuotesCommand.InitializeAsync(this);
+            await SelectionIntStringCommand.InitializeAsync(this);
+            await SelectionTaskBracketCommand.InitializeAsync(this);
             await EditJoinLinesCommand.InitializeAsync(this);
             await TitleCaseCommand.InitializeAsync(this);
             await LowerTitleCaseCommand.InitializeAsync(this);

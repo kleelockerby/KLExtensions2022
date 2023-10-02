@@ -75,7 +75,6 @@ namespace KLExtensions2022
             target.NamespaceOptions = kLExtensions2022Package.OptionNamespace;
 
             string fileName = "class1.cs";
-            // string input = PromptForFileName(fileName, out string nameSpaceType, out string usingsType);
             string input = PromptForFileName(fileName, target, out NamespaceOptions namespaceOptions, out bool useImplicitUsings);
             if (string.IsNullOrEmpty(input))
             {

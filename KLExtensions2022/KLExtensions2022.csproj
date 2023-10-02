@@ -62,11 +62,13 @@
     <Compile Include="Commands\Select\SetAllMethodsBreakpointsCommand.cs" />
     <Compile Include="Commands\SurroundWith\SelectionBracesCommand.cs" />
     <Compile Include="Commands\SurroundWith\SelectionDoubleQuotesCommand.cs" />
+    <Compile Include="Commands\SurroundWith\SelectionIntStringCommand.cs" />
     <Compile Include="Commands\SurroundWith\SelectionParenthesisCommand.cs" />
     <Compile Include="Commands\Select\SelectWholeLineCommand.cs" />
     <Compile Include="Commands\Edit\SentenceCaseCommand.cs" />
     <Compile Include="Commands\Edit\SortLinesCommand.cs" />
     <Compile Include="Commands\Edit\TitleCaseCommand.cs" />
+    <Compile Include="Commands\SurroundWith\SelectionTaskBracketCommand.cs" />
     <Compile Include="Enums\Direction.cs" />
     <Compile Include="Extensions\DocumentExtensions.cs" />
     <Compile Include="Extensions\EditPointExtensions.cs" />
@@ -159,6 +161,7 @@
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <Content Include="Resources\KLExtensionCommand.png" />
+    <Content Include="Resources\KLExtensionCommand2.png" />
     <Content Include="Resources\KLExtensionsEdit.png" />
     <Content Include="Resources\KLExtensionsEdit2.png" />
     <Content Include="Resources\ObjectInitializer.png" />
