@@ -17,6 +17,8 @@ namespace KLExtensions2022
         public Action ActionToClose { get; set; } = null;
         public NamespaceOptions NamespaceOptions { get; set; }
         public bool UseImplicitUsings { get; set; }
+        public bool IsStatic { get; set; } = false;
+        public bool IsRoslyn { get; set; } = false;
 
         public SaveFileDialogWindow (string labelName, string fileName, Func<string, Task> actionToDo)
         {
@@ -72,8 +74,7 @@ namespace KLExtensions2022
             if (!string.IsNullOrWhiteSpace(txtName.Text))
             {
                 DialogResult = true;
-                GetNameSpaceType();
-                GetUsingsType();
+
                 if (ActionToClose == null)
                 {
                     Close();
@@ -86,7 +87,7 @@ namespace KLExtensions2022
             }
         }
 
-        private void GetNameSpaceType ()
+        private void GetNameSpaceType()
         {
             if (this.NamespaceOptions == NamespaceOptions.Project)
             {
@@ -98,7 +99,7 @@ namespace KLExtensions2022
             }
         }
 
-        private void GetUsingsType ()
+        private void GetUsingsType()
         {
             if (this.UseImplicitUsings == true)
             {
@@ -110,13 +111,12 @@ namespace KLExtensions2022
             }
         }
 
-        private void Window_KeyDown (object sender, KeyEventArgs e)
+        private void Window_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Return)
             {
                 DialogResult = true;
-                GetNameSpaceType();
-                GetUsingsType();
+
                 if (ActionToClose == null)
                 {
                     Close();
@@ -127,6 +127,36 @@ namespace KLExtensions2022
                     _ = ActionToDo.Invoke(txtName.Text);
                 }
             }
+        }
+
+        private void chkStatic_CheckedChanged(object sender, RoutedEventArgs e)
+        {
+            this.IsStatic = (chkStatic.IsChecked == true) ? true : false;
+        }
+
+        private void chkRoslyn_CheckedChanged(object sender, RoutedEventArgs e)
+        {
+            this.IsRoslyn = (chkRoslyn.IsChecked == true) ? true: false;
+        }
+
+        private void NamespaceProject_CheckChanged(object sender, RoutedEventArgs e)
+        {
+            NamespaceOptions = NamespaceOptions.Project;
+        }
+
+        private void NamespaceFolder_CheckChanged(object sender, RoutedEventArgs e)
+        {
+            NamespaceOptions = NamespaceOptions.Folder;
+        }
+
+        private void UsingsTrue_CheckChanged(object sender, RoutedEventArgs e)
+        {
+            UseImplicitUsings = true;
+        }
+
+        private void UsingsFalse_CheckChanged(object sender, RoutedEventArgs e)
+        {
+            UseImplicitUsings = false;
         }
     }
 }

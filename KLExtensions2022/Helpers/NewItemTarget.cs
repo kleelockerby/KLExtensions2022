@@ -36,6 +36,8 @@ namespace KLExtensions2022
         public string FileFolder { get; set; }
         public NamespaceOptions NamespaceOptions { get; set; }
         public bool UseImplicitUsings { get; set; }
+        public bool IsStatic { get; set; }
+        public bool IsRoslyn { get; set; }
         public bool IsSolutionOrSolutionFolder { get; }
         public bool IsSolution => IsSolutionOrSolutionFolder && Project == null;
         public bool IsSolutionFolder => IsSolutionOrSolutionFolder && Project != null;

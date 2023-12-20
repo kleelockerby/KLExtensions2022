@@ -75,7 +75,7 @@ namespace KLExtensions2022
             target.NamespaceOptions = kLExtensions2022Package.OptionNamespace;
 
             string fileName = "class1.cs";
-            string input = PromptForFileName(fileName, target, out NamespaceOptions namespaceOptions, out bool useImplicitUsings);
+            string input = PromptForFileName(fileName, target, out NamespaceOptions namespaceOptions, out bool useImplicitUsings, out bool isStatic, out bool isRoslyn);
             if (string.IsNullOrEmpty(input))
             {
                 return;
@@ -91,6 +91,8 @@ namespace KLExtensions2022
             }
 
             target.UseImplicitUsings = useImplicitUsings;
+            target.IsStatic = isStatic;
+            target.IsRoslyn = isRoslyn;
             AddItemAsync(input, target).Forget();
         }
 
@@ -121,7 +123,7 @@ namespace KLExtensions2022
                 if (!file.Exists)
                 {
                     Project project = target.Project;
-                    int position = await WriteFileAsync(file.FullName, name, target.NameSpace, target.UseImplicitUsings);
+                    int position = await WriteFileAsync(file.FullName, name, target.NameSpace, target.UseImplicitUsings, target.IsStatic, target.IsRoslyn);
 
                     if (target.ProjectItem != null && target.ProjectItem.IsKind(EnvDTE.Constants.vsProjectItemKindVirtualFolder))
                     {
@@ -153,7 +155,7 @@ namespace KLExtensions2022
             }
         }
 
-        private string PromptForFileName(string fileName, NewItemTarget target, out NamespaceOptions namespaceOption, out bool useImplicitUsings)
+        private string PromptForFileName(string fileName, NewItemTarget target, out NamespaceOptions namespaceOption, out bool useImplicitUsings, out bool isStatic, out bool isRoslyn)
         {
             var xamlDialog = new SaveFileDialogWindow("Class Name: ", fileName, target.NamespaceOptions, target.UseImplicitUsings)
             {
@@ -161,23 +163,29 @@ namespace KLExtensions2022
             };
             xamlDialog.HasMinimizeButton = false;
             xamlDialog.HasMaximizeButton = false;
-            xamlDialog.MaxHeight = 180;
-            xamlDialog.MinHeight = 170;
+            xamlDialog.MaxHeight = 250;
+            xamlDialog.MinHeight = 250;
             xamlDialog.MaxWidth = 500;
             xamlDialog.MinWidth = 500;
             xamlDialog.Title = "Move To New ViewModel File";
 
             bool? result = xamlDialog.ShowDialog();
 
-            if (xamlDialog.btnProject.IsChecked == true)
-                namespaceOption = NamespaceOptions.Project;
-            else
-                namespaceOption = NamespaceOptions.Folder;
+            namespaceOption = xamlDialog.NamespaceOptions;
+            useImplicitUsings = xamlDialog.UseImplicitUsings;
 
-            if (xamlDialog.btnUsingsTrue.IsChecked == true)
-                useImplicitUsings = true;
-            else
-                useImplicitUsings = false;
+            //if (xamlDialog.btnProject.IsChecked == true)
+            //    namespaceOption = NamespaceOptions.Project;
+            //else
+            //    namespaceOption = NamespaceOptions.Folder;
+
+            //if (xamlDialog.btnUsingsTrue.IsChecked == true)
+            //    useImplicitUsings = true;
+            //else
+            //    useImplicitUsings = false;
+
+            isStatic = (xamlDialog.IsStatic == true) ? true : false;
+            isRoslyn = (xamlDialog.IsRoslyn == true) ? true : false;
 
             namespaceOption = xamlDialog.NamespaceOptions;
             useImplicitUsings = xamlDialog.UseImplicitUsings;
@@ -185,9 +193,9 @@ namespace KLExtensions2022
             return (result.HasValue && result.Value) ? xamlDialog.Input : string.Empty;
         }
 
-        private static async Task<int> WriteFileAsync(string fileNameAndPath, string fileName, string nameSpace, bool useImplicitUsings)
+        private static async Task<int> WriteFileAsync(string fileNameAndPath, string fileName, string nameSpace, bool useImplicitUsings, bool isStatic, bool isRoslyn)
         {
-            string template = CreateClassFile(fileName, nameSpace, useImplicitUsings);
+            string template = CreateClassFile(fileName, nameSpace, useImplicitUsings, isStatic, isRoslyn);
 
             if (!string.IsNullOrEmpty(template))
             {
@@ -205,11 +213,29 @@ namespace KLExtensions2022
             return 0;
         }
 
-        internal static string CreateClassFile(string name, string nameSpace, bool useImplicitUsings)
+        internal static string CreateClassFile(string name, string nameSpace, bool useImplicitUsings, bool isStatic, bool isRoslyn)
         {
             string className = name.RemoveFileNameExtension();
             string content = (useImplicitUsings == true) ? CSharpTemplate.ContentUsings : CSharpTemplate.ContentNoUsings;
             content = content.Replace("%NAMESPACE%", nameSpace).Replace("%FILENAME%", className);
+            content = (isStatic == true) ? content.Replace("%STATIC%", " static") : content.Replace("%STATIC%", string.Empty);
+            
+            if(isRoslyn)
+            {
+                StringBuilder sb = new StringBuilder();
+                sb.AppendLine("using Microsoft.CodeAnalysis;");
+                sb.AppendLine("using Microsoft.CodeAnalysis.CSharp;");
+                sb.AppendLine("using Microsoft.CodeAnalysis.CSharp.Syntax;");
+                sb.AppendLine("using Microsoft.CodeAnalysis.Formatting;");
+                sb.AppendLine("using Document = Microsoft.CodeAnalysis.Document;");
+                content = content.Replace("%ROSLYN%", sb.ToString());
+            }
+            else
+            {
+                content = content.Replace("%ROSLYN%", string.Empty);
+            }
+            
+            
             return FileHelper.NormalizeLineEndings(content);
         }
     }

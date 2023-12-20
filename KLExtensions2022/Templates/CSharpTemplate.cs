@@ -13,10 +13,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+%ROSLYN%
 namespace %NAMESPACE% 
 {
-    public class %FILENAME%
+    public%STATIC% class %FILENAME%
     {
         $
     }
@@ -28,10 +28,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+%ROSLYN%
 namespace %NAMESPACE%; 
 
-public class %FILENAME%
+public%STATIC% class %FILENAME%
 {
     $
 }
