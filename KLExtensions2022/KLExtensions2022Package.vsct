@@ -89,6 +89,17 @@
                     <ButtonText>Remove Regions</ButtonText>
                 </Strings>
             </Button>
+
+            <Button guid="guidPackageCmdSet" id="RemoveVarsCommandId" priority="0x0200" type="Button">
+                <Parent guid="guidPackageCmdSet" id="KLExtensionsMenuGroup" />
+                <Icon guid="ImageCatalogGuid" id="LocalVariable"/>
+                <CommandFlag>IconIsMoniker</CommandFlag>
+                <Strings>
+                    <CommandName>RemoveVarsCommandId</CommandName>
+                    <ButtonText>Remove Vars in Document</ButtonText>
+                </Strings>
+            </Button>
+
             <Button guid="guidPackageCmdSet" id="SetAllMethodsBreakpointsCommandId" priority="0x0200" type="Button">
                 <Parent guid="guidPackageCmdSet" id="KLExtensionsMenuGroup" />
                 <Icon guid="ImageCatalogGuid" id="EnableAllBreakpoints" />
@@ -319,6 +330,7 @@
             <IDSymbol name="KLExtensionsMenu" value="0x1021" />
             <IDSymbol name="RemoveCommentCommandId" value="0x0100" />
             <IDSymbol name="RemoveRegionsCommandId" value="0x0200" />
+            <IDSymbol name="RemoveVarsCommandId" value="0x0205" />
             <IDSymbol name="AddPublicClassCommandId" value="0x0210" />
             <IDSymbol name="SetAllMethodsBreakpointsCommandId" value="0x0220" />
         </GuidSymbol>

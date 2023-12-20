@@ -39,10 +39,7 @@ namespace KLExtensions2022
                 Document document = caretPosition.Snapshot.GetOpenDocumentInCurrentContextWithChanges();
 
                 IdentifierNameSyntax objectType = (await document.GetSyntaxRootAsync())
-                .FindToken(caretPosition)
-                .Parent.AncestorsAndSelf()
-                .OfType<IdentifierNameSyntax>()
-                .FirstOrDefault();
+                                                .FindToken(caretPosition).Parent.AncestorsAndSelf().OfType<IdentifierNameSyntax>().FirstOrDefault();
 
                 if (objectType != null)
                 {

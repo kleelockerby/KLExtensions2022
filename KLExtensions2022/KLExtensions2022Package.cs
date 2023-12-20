@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.Shell;
 using System;
 using System.Runtime.InteropServices;
+using Microsoft.VisualStudio.LanguageServices;
 using System.Threading;
 using Task = System.Threading.Tasks.Task;
 using EnvDTE;
@@ -22,6 +23,8 @@ namespace KLExtensions2022
         public static DTE DTE;
         public static DTE2 DTE2;
         public static IComponentModel ComponentModel;
+        public static VisualStudioWorkspace Workspace;
+
         public static JoinableTaskFactory JoinTaskFactory;
 
         public Document ActiveDocument
@@ -75,6 +78,7 @@ namespace KLExtensions2022
             DTE2 =  (DTE2)await GetServiceAsync(typeof(DTE));
             JoinTaskFactory = this.JoinableTaskFactory;
             ComponentModel = await GetServiceAsync(typeof(SComponentModel)) as IComponentModel;
+            Workspace = ComponentModel.GetService<VisualStudioWorkspace>();
 
             await RemoveCommentCommand.InitializeAsync(this);
             await RemoveRegionsCommand.InitializeAsync(this);
@@ -96,6 +100,7 @@ namespace KLExtensions2022
             await InsertGuidCommand.InitializeAsync(this);
             await DuplicateAndCopyCommand.InitializeAsync(this);
             await CreateObjectInitializerCommand.InitializeAsync(this);
+            await RemoveVarsCommand.InitializeAsync(this);
         }
     }
 }
