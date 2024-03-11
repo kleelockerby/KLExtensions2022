@@ -49,6 +49,7 @@
     <Compile Include="Commands\Base\BaseCommand.cs" />
     <Compile Include="Commands\Base\CommandAttribute.cs" />
     <Compile Include="Commands\Create\CreateObjectInitializerCommand.cs" />
+    <Compile Include="Commands\Create\InsertRemoveNullabilityCommand.cs" />
     <Compile Include="Commands\Edit\CopyWithoutIndentation.cs" />
     <Compile Include="Commands\Edit\EditJoinLinesCommand.cs" />
     <Compile Include="Commands\ExecuteCommand.cs" />
@@ -157,7 +158,6 @@
     </VSCTCompile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Commands\Resources\RemoveVarsCommand.png" />
     <Content Include="Resources\CollectionInitializer.png" />
     <Content Include="Resources\CreateCommandIconGroup.png" />
     <Content Include="Resources\EnableAllBreakpoints.png" />
