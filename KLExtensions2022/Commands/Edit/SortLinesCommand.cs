@@ -55,10 +55,10 @@ namespace KLExtensions2022
 
         protected void SetupCommands()
         {
-            var cmdAsc = new CommandID(PackageGuids.guidPackageEditContextCmdSet, PackageIds.EditSortLinesAscCommandId);
+            CommandID cmdAsc = new CommandID(PackageGuids.guidPackageEditContextCmdSet, PackageIds.EditSortLinesAscCommandId);
             RegisterCommand(cmdAsc, () => Execute(Direction.Ascending));
 
-            var cmdDesc = new CommandID(PackageGuids.guidPackageEditContextCmdSet, PackageIds.EditSortLinesDescCommandId);
+            CommandID cmdDesc = new CommandID(PackageGuids.guidPackageEditContextCmdSet, PackageIds.EditSortLinesDescCommandId);
             RegisterCommand(cmdDesc, () => Execute(Direction.Descending));
         }
 
