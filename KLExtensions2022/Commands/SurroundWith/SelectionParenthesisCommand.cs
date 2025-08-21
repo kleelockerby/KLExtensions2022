@@ -61,7 +61,8 @@ namespace KLExtensions2022
                 string text = selection.Text;
                 if (!string.IsNullOrEmpty(text))
                 {
-                    selection.Text = AddParanthesis(text);
+                    string txt = AddParanthesis(text);
+                    selection.Text = txt.TrimEnd(')');
                 }
             }
         }
@@ -70,7 +71,8 @@ namespace KLExtensions2022
         {
             if (!string.IsNullOrWhiteSpace(text))
             {
-                text = $"({text})";
+                // text = $"({text})";
+                text = "(" + text + ")";
             }
             return text;
         }

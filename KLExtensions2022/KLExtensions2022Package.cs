@@ -102,6 +102,7 @@ namespace KLExtensions2022
             await CreateObjectInitializerCommand.InitializeAsync(this);
             await RemoveVarsCommand.InitializeAsync(this);
             await InsertRemoveNullabilityCommand.InitializeAsync(this);
+            await SelectionStringIsNullCommand.InitializeAsync(this);
         }
     }
 }

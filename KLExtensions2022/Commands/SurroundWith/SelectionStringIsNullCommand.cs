@@ -1,48 +1,32 @@
-﻿using Microsoft.VisualStudio.Shell;
-using Microsoft.VisualStudio.Shell.Interop;
-using System;
-using System.ComponentModel.Design;
-using System.Globalization;
-using System.Threading;
-using System.Threading.Tasks;
-using Task = System.Threading.Tasks.Task;
-using EnvDTE;
+﻿using EnvDTE;
 using EnvDTE80;
 using Microsoft;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text.RegularExpressions;
-using Microsoft.VisualStudio;
-using Microsoft.VisualStudio.Text;
-using Microsoft.VisualStudio.Text.Editor;
-using Microsoft.VisualStudio.Text.Tagging;
-using Microsoft.VisualStudio.ComponentModelHost;
-using Microsoft.VisualStudio.Editor;
-using Microsoft.VisualStudio.TextManager.Interop;
+using Microsoft.VisualStudio.Shell;
+using System;
+using System.ComponentModel.Design;
+using System.Threading.Tasks;
 
 namespace KLExtensions2022
 {
-    internal sealed class SelectionDoubleQuotesCommand
+    internal sealed class SelectionStringIsNullCommand
     {
         public static DTE2 DTE { get; private set; }
-        public static SelectionDoubleQuotesCommand Instance { get; private set; }
+        public static SelectionStringIsNullCommand Instance { get; private set; }
 
-        private SelectionDoubleQuotesCommand(OleMenuCommandService commandService)
+        private SelectionStringIsNullCommand(OleMenuCommandService commandService)
         {
-            var menuCommandID = new CommandID(PackageGuids.guidPackageSurroundWithCmdSet, PackageIds.SurroundWithDoubleQuotesCommandId);
+            var menuCommandID = new CommandID(PackageGuids.guidPackageSurroundWithCmdSet, PackageIds.SurroundWithStringIsNullCommandId);
             var command = new OleMenuCommand(Callback, menuCommandID);
             commandService.AddCommand(command);
         }
 
         public static async Task InitializeAsync(AsyncPackage package)
         {
-            await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync(package.DisposalToken);
-
             DTE = await package.GetServiceAsync(typeof(DTE)) as DTE2;
             Assumes.Present(DTE);
 
             OleMenuCommandService commandService = await package.GetServiceAsync(typeof(IMenuCommandService)) as OleMenuCommandService;
-            Instance = new SelectionDoubleQuotesCommand(commandService);
+            Instance = new SelectionStringIsNullCommand(commandService);
         }
 
         private void Callback(object sender, EventArgs e)
@@ -54,24 +38,23 @@ namespace KLExtensions2022
         private void Execute(OleMenuCommand button)
         {
             ThreadHelper.ThrowIfNotOnUIThread();
-
             if ((DTE != null) && (DTE.ActiveDocument != null))
             {
                 TextSelection selection = (TextSelection)DTE.ActiveDocument.Selection;
                 string text = selection.Text;
                 if (!string.IsNullOrEmpty(text))
                 {
-                    string txt = AddDoubleQuotes(text);
-                    selection.Text = txt.TrimEnd('"');
+                    string txt = AddIsNullOrEmpty(text);
+                    selection.Text = txt;
                 }
             }
         }
 
-        private string AddDoubleQuotes(string text)
+        private string AddIsNullOrEmpty(string text)
         {
             if (!string.IsNullOrWhiteSpace(text))
             {
-                text = "\"" + text + "\"";
+                text = $"if(!string.IsNullOrEmpty({text}))" + Environment.NewLine + "{" + Environment.NewLine + Environment.NewLine + "}";
             }
             return text;
         }

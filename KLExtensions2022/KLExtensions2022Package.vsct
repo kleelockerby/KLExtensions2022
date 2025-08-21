@@ -139,12 +139,22 @@
                     <ButtonText>Int String $"{}"</ButtonText>
                 </Strings>
             </Button>
+
             <Button guid="guidPackageSurroundWithCmdSet" id="SurroundWithTaskBracketCommandId" priority="0x0104" type="Button">
                 <Parent guid="guidPackageSurroundWithCmdSet" id="SurroundWithItemsMenuGroup" />
                 <Icon guid="guidImages4" id="bmpPic19" />
                 <Strings>
                     <CommandName>SurroundWithTaskBracketCommandId</CommandName>
                     <ButtonText>Task &lt; &gt;</ButtonText>
+                </Strings>
+            </Button>
+
+            <Button guid="guidPackageSurroundWithCmdSet" id="SurroundWithStringIsNullCommandId" priority="0x0105" type="Button">
+                <Parent guid="guidPackageSurroundWithCmdSet" id="SurroundWithItemsMenuGroup" />
+                <Icon guid="guidImages4" id="bmpPic21" />
+                <Strings>
+                    <CommandName>SurroundWithStringIsNullCommandId</CommandName>
+                    <ButtonText>!String.IsNullOrEmpty</ButtonText>
                 </Strings>
             </Button>
 
@@ -276,7 +286,7 @@
             <Bitmap guid="guidImages" href="Resources\KLExtensionCommand.png" usedList="bmpPic1, bmpPic2, bmpPic3, bmpPic4, bmpPic5, bmpPic6" />
             <Bitmap guid="guidImages2" href="Resources\KLExtensionsEdit.png" usedList="bmpPic7, bmpPic8, bmpPic9, bmpPic10, bmpPic11, bmpPic12" />
             <Bitmap guid="guidImages3" href="Resources\KLExtensionsEdit2.png" usedList="bmpPic13, bmpPic14, bmpPic15, bmpPic16, bmpPic17" />
-            <Bitmap guid="guidImages4" href="Resources\KLExtensionCommand2.png" usedList="bmpPic18, bmpPic19" />
+            <Bitmap guid="guidImages4" href="Resources\KLExtensionCommand2.png" usedList="bmpPic18, bmpPic19, bmpPic20, bmpPic21" />
             <Bitmap guid="guidImagesCreate" href="Resources\ObjectInitializer.png" usedList="bmpObjInit" />
         </Bitmaps>
     </Commands>
@@ -294,6 +304,7 @@
         <VisibilityItem guid="guidPackageSurroundWithCmdSet" id="SurroundWithParenthesisCommandId" context="GUID_TextEditorFactory" />
         <VisibilityItem guid="guidPackageSurroundWithCmdSet" id="SurroundWithDoubleQuotesCommandId" context="GUID_TextEditorFactory" />
         <VisibilityItem guid="guidPackageSurroundWithCmdSet" id="SurroundWithIntStringCommandId" context="GUID_TextEditorFactory" />
+        <VisibilityItem guid="guidPackageSurroundWithCmdSet" id="SurroundWithStringIsNullCommandId" context="GUID_TextEditorFactory" />
         <VisibilityItem guid="guidPackageSurroundWithCmdSet" id="SurroundWithTaskBracketCommandId" context="GUID_TextEditorFactory" />
         <VisibilityItem guid="guidPackageEditContextCmdSet" id="EditJoinLinesCommandId" context="GUID_TextEditorFactory" />
         <VisibilityItem guid="guidPackageEditContextCmdSet" id="EditTitleCaseCommandId" context="GUID_TextEditorFactory" />
@@ -310,6 +321,7 @@
         <KeyBinding guid="guidPackageSurroundWithCmdSet" id="SurroundWithParenthesisCommandId" mod1="Control Shift" key1="0x39" editor="guidVSStd97" />
         <KeyBinding guid="guidPackageSurroundWithCmdSet" id="SurroundWithDoubleQuotesCommandId" mod1="Control Shift" key1="0xDE" editor="guidVSStd97" />
         <KeyBinding guid="guidPackageSurroundWithCmdSet" id="SurroundWithTaskBracketCommandId" mod1="Control Shift" key1="0x2D" editor="guidVSStd97" />
+        <KeyBinding guid="guidPackageSurroundWithCmdSet" id="SurroundWithStringIsNullCommandId" mod1="Shift" key1="S" mod2="Shift" key2="N" editor="guidVSStd97" />
         <KeyBinding guid="guidPackageEditContextCmdSet" id="EditJoinLinesCommandId" mod1="Control Shift Alt" key1="VK_RIGHT" editor="guidVSStd97" />
         <KeyBinding guid="guidPackageEditContextCmdSet" id="EditTitleCaseCommandId" mod1="Control Shift" key1="VK_UP" editor="guidVSStd97" />
         <KeyBinding guid="guidPackageEditContextCmdSet" id="EditLowerTitleCaseCommandId" mod1="Control Shift" key1="VK_DOWN" editor="guidVSStd97" />
@@ -346,6 +358,7 @@
             <IDSymbol name="SurroundWithIntStringCommandId" value="257" />
             <IDSymbol name="SurroundWithTaskBracketCommandId" value="259" />
             <IDSymbol name="SurroundWithItemsMenuGroup" value="260" />
+            <IDSymbol name="SurroundWithStringIsNullCommandId" value="261" />
         </GuidSymbol>
 
         <GuidSymbol name="guidPackageEditContextCmdSet" value="{707f8641-5997-4761-a5f4-8194ea23f878}">
@@ -404,19 +417,11 @@
             <IDSymbol name="bmpPic18" value="1" />
             <IDSymbol name="bmpPic19" value="2" />
             <IDSymbol name="bmpPic20" value="3" />
+            <IDSymbol name="bmpPic21" value="4" />
         </GuidSymbol>
         <GuidSymbol name="guidImagesCreate" value="{7d18561b-8b04-45e6-97b4-17fe6467bd43}">
             <IDSymbol name="bmpObjInit" value="1" />
             <IDSymbol name="bmpCollInit" value="2" />
-        </GuidSymbol>
-
-        <GuidSymbol value="{879aaaf2-2865-4a25-9cb3-9649306a22dd}" name="guidImages1">
-            <IDSymbol name="bmpPic1" value="1" />
-            <IDSymbol name="bmpPic2" value="2" />
-            <IDSymbol name="bmpPicSearch" value="3" />
-            <IDSymbol name="bmpPicX" value="4" />
-            <IDSymbol name="bmpPicArrows" value="5" />
-            <IDSymbol name="bmpPicStrikethrough" value="6" />
         </GuidSymbol>
     </Symbols>
 </CommandTable>

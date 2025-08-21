@@ -41,9 +41,6 @@ namespace KLExtensions2022
 
         public const string guidImagesCreateString = "7d18561b-8b04-45e6-97b4-17fe6467bd43";
         public static Guid guidImagesCreate = new Guid(guidImagesCreateString);
-
-        public const string guidImages1String = "879aaaf2-2865-4a25-9cb3-9649306a22dd";
-        public static Guid guidImages1 = new Guid(guidImages1String);
     }
     /// <summary>
     /// Helper class that encapsulates all CommandIDs uses across VS Package.
@@ -65,6 +62,7 @@ namespace KLExtensions2022
         public const int SurroundWithIntStringCommandId = 0x0101;
         public const int SurroundWithTaskBracketCommandId = 0x0103;
         public const int SurroundWithItemsMenuGroup = 0x0104;
+        public const int SurroundWithStringIsNullCommandId = 0x0105;
         public const int EditMenuGroup = 0x1022;
         public const int EditSubMenu = 0x0105;
         public const int EditItemsMenuGroup = 0x0106;
@@ -107,11 +105,8 @@ namespace KLExtensions2022
         public const int bmpPic18 = 0x0001;
         public const int bmpPic19 = 0x0002;
         public const int bmpPic20 = 0x0003;
+        public const int bmpPic21 = 0x0004;
         public const int bmpObjInit = 0x0001;
         public const int bmpCollInit = 0x0002;
-        public const int bmpPicSearch = 0x0003;
-        public const int bmpPicX = 0x0004;
-        public const int bmpPicArrows = 0x0005;
-        public const int bmpPicStrikethrough = 0x0006;
     }
 }

@@ -61,7 +61,8 @@ namespace KLExtensions2022
                 string text = selection.Text;
                 if (!string.IsNullOrEmpty(text))
                 {
-                    selection.Text = AddBracesAndLines(text);
+                    string txt = AddBracesAndLines(text);
+                    selection.Text = txt.TrimEnd('}');
                 }
             }
         }
@@ -70,7 +71,8 @@ namespace KLExtensions2022
         {
             if (!string.IsNullOrWhiteSpace(text))
             {
-                text = $"{{{Environment.NewLine}\t{text}{Environment.NewLine}}}";
+                // text = $"{{{Environment.NewLine}\t{text}{Environment.NewLine}}}";
+                text = "{" + Environment.NewLine + text.TrimEnd() + Environment.NewLine + "}";
             }
             return text;
         }

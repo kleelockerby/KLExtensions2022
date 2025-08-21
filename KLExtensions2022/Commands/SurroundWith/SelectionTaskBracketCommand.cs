@@ -56,7 +56,7 @@ namespace KLExtensions2022
         {
             if (!string.IsNullOrWhiteSpace(text))
             {
-                text = $"Task<{text}>";
+                text = $"Task<{text.TrimEnd()}>";
             }
             return text;
         }

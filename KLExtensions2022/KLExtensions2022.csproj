@@ -70,6 +70,7 @@
     <Compile Include="Commands\Edit\SentenceCaseCommand.cs" />
     <Compile Include="Commands\Edit\SortLinesCommand.cs" />
     <Compile Include="Commands\Edit\TitleCaseCommand.cs" />
+    <Compile Include="Commands\SurroundWith\SelectionStringIsNullCommand.cs" />
     <Compile Include="Commands\SurroundWith\SelectionTaskBracketCommand.cs" />
     <Compile Include="Enums\Direction.cs" />
     <Compile Include="Extensions\DocumentExtensions.cs" />

@@ -16,6 +16,16 @@ using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.Text.Tagging;
 using KLExtensions2022.Helpers;
+using Microsoft.VisualStudio.Text.Classification;
+using Microsoft.VisualStudio.ComponentModelHost;
+using System.Windows.Shapes;
+using System.ComponentModel.Composition.Hosting;
+using static System.Windows.Forms.LinkLabel;
+using System.Collections;
+using System.ComponentModel;
+using System.Windows.Forms;
+using Microsoft.VisualStudio.Text.Formatting;
+using Microsoft.CodeAnalysis.Classification;
 
 namespace KLExtensions2022
 {
@@ -37,14 +47,14 @@ namespace KLExtensions2022
 
         private RemoveCommentCommand(OleMenuCommandService commandService)
         {
-            var menuCommandID = new CommandID(PackageGuids.guidPackageCmdSet, PackageIds.RemoveCommentCommandId);
-            var command = new OleMenuCommand(Callback, menuCommandID);
+            CommandID menuCommandID = new CommandID(PackageGuids.guidPackageCmdSet, PackageIds.RemoveCommentCommandId);
+            OleMenuCommand command = new OleMenuCommand(Callback, menuCommandID);
             commandService.AddCommand(command);
         }
 
         private void Callback(object sender, EventArgs e)
         {
-            var button = (OleMenuCommand)sender;
+            OleMenuCommand button = (OleMenuCommand)sender;
             Execute(button);
         }
 
@@ -74,25 +84,38 @@ namespace KLExtensions2022
             }
         }
 
-        protected static IEnumerable<IMappingSpan> GetClassificationSpans(IWpfTextView view, string classificationName)
+        //Had to change because MicroStupidFucks changed the SDK Api with Visual Studio 17.9
+        protected static IEnumerable<IMappingSpan> GetClassificationSpans(IWpfTextView textView, string classificationName)
         {
-            if (view == null)
-            {
-                return Enumerable.Empty<IMappingSpan>();
-            }
+            IComponentModel componentModel = ProjectHelpers.GetComponentModel();
+            List<IMappingSpan> mappingSpanList = new List<IMappingSpan>();
 
-            Microsoft.VisualStudio.ComponentModelHost.IComponentModel componentModel = ProjectHelpers.GetComponentModel();
-            IBufferTagAggregatorFactoryService service = componentModel.GetService<IBufferTagAggregatorFactoryService>();
-            ITagAggregator<IClassificationTag> classifier = service.CreateTagAggregator<IClassificationTag>(view.TextBuffer);
-            SnapshotSpan snapshot = new SnapshotSpan(view.TextBuffer.CurrentSnapshot, 0, view.TextBuffer.CurrentSnapshot.Length);
+            IViewTagAggregatorFactoryService service = componentModel.GetService<IViewTagAggregatorFactoryService>();
+            ITagAggregator<IClassificationTag> aggregator = service.CreateTagAggregator<IClassificationTag>(textView);
 
-            IEnumerable<IMappingSpan> mapSpan = classifier.GetTags(snapshot).Reverse().Where(cl => cl.Tag.ClassificationType.Classification.IndexOf(classificationName, StringComparison.OrdinalIgnoreCase) > -1).Select(cl2 => cl2.Span);
-            return mapSpan;
+            SnapshotSpan selectionSpan = new SnapshotSpan(textView.TextSnapshot, new Span(0, textView.TextSnapshot.Length));
+            IEnumerable<IMappingTagSpan<IClassificationTag>> mappingTagSpans = aggregator.GetTags(selectionSpan);
+            IEnumerable<IMappingSpan> mappingSpans = mappingTagSpans.Reverse().Where(cl => cl.Tag.ClassificationType.Classification.IndexOf(classificationName, StringComparison.OrdinalIgnoreCase) > -1).Select(cl2 => cl2.Span);
+            return mappingSpans;
+        }
+
+        public static IEnumerable<IMappingTagSpan<IClassificationTag>> GetClassificationTags(SnapshotSpan span, ITextView textView)
+        {
+            ITextSnapshot snapshot = textView.TextSnapshot;
+
+            IComponentModel componentModel = (IComponentModel)ServiceProvider.GlobalProvider.GetService(typeof(SComponentModel));
+            ExportProvider exportProvider = componentModel.DefaultExportProvider;
+
+            IViewTagAggregatorFactoryService viewTagAggregatorFactoryService = exportProvider.GetExportedValue<IViewTagAggregatorFactoryService>();
+
+            ITagAggregator<IClassificationTag> tagAggregator = viewTagAggregatorFactoryService.CreateTagAggregator<IClassificationTag>(textView);
+
+            return tagAggregator.GetTags(span);
         }
 
         private static void DeleteFromBuffer(IWpfTextView view, IEnumerable<IMappingSpan> mappingSpans)
         {
-            var affectedLines = new List<int>();
+            List<int> affectedLines = new List<int>();
 
             RemoveCommentSpansFromBuffer(view, mappingSpans, affectedLines);
             RemoveAffectedEmptyLines(view, affectedLines);
@@ -104,11 +127,11 @@ namespace KLExtensions2022
             {
                 foreach (var mappingSpan in mappingSpans)
                 {
-                    var start = mappingSpan.Start.GetPoint(view.TextBuffer, PositionAffinity.Predecessor).Value;
-                    var end = mappingSpan.End.GetPoint(view.TextBuffer, PositionAffinity.Successor).Value;
+                    SnapshotPoint start = mappingSpan.Start.GetPoint(view.TextBuffer, PositionAffinity.Predecessor).Value;
+                    SnapshotPoint end = mappingSpan.End.GetPoint(view.TextBuffer, PositionAffinity.Successor).Value;
 
-                    var span = new Span(start, end - start);
-                    var lines = view.TextBuffer.CurrentSnapshot.Lines.Where(l => l.Extent.IntersectsWith(span));
+                    Span span = new Span(start, end - start);
+                    IEnumerable<ITextSnapshotLine> lines = view.TextBuffer.CurrentSnapshot.Lines.Where(l => l.Extent.IntersectsWith(span));
 
                     foreach (var line in lines)
                     {
@@ -121,7 +144,7 @@ namespace KLExtensions2022
                             affectedLines.Add(line.LineNumber);
                     }
 
-                    var mappingText = view.TextBuffer.CurrentSnapshot.GetText(span.Start, span.Length);
+                    string mappingText = view.TextBuffer.CurrentSnapshot.GetText(span.Start, span.Length);
                     string empty = Regex.Replace(mappingText, "([\\S]+)", string.Empty);
 
                     edit.Replace(span.Start, span.Length, empty);
@@ -140,14 +163,14 @@ namespace KLExtensions2022
             {
                 foreach (var lineNumber in affectedLines)
                 {
-                    var line = view.TextBuffer.CurrentSnapshot.GetLineFromLineNumber(lineNumber);
+                    ITextSnapshotLine line = view.TextBuffer.CurrentSnapshot.GetLineFromLineNumber(lineNumber);
 
                     if (IsLineEmpty(line))
                     {
                         // Strip next line if empty
                         if (view.TextBuffer.CurrentSnapshot.LineCount > line.LineNumber + 1)
                         {
-                            var next = view.TextBuffer.CurrentSnapshot.GetLineFromLineNumber(lineNumber + 1);
+                            ITextSnapshotLine next = view.TextBuffer.CurrentSnapshot.GetLineFromLineNumber(lineNumber + 1);
 
                             if (IsLineEmpty(next))
                                 edit.Delete(next.Start, next.LengthIncludingLineBreak);
@@ -163,7 +186,7 @@ namespace KLExtensions2022
 
         protected static bool IsLineEmpty(ITextSnapshotLine line)
         {
-            var text = line.GetText().Trim();
+            string text = line.GetText().Trim();
 
             return (string.IsNullOrWhiteSpace(text)
                    || text == "<!--"
@@ -176,7 +199,7 @@ namespace KLExtensions2022
 
         protected static bool IsXmlDocComment(ITextSnapshotLine line)
         {
-            var text = line.GetText().Trim();
+            string text = line.GetText().Trim();
             Microsoft.VisualStudio.Utilities.IContentType contentType = line.Snapshot.TextBuffer.ContentType;
 
             if (contentType.IsOfType("CSharp") && text.StartsWith("///"))

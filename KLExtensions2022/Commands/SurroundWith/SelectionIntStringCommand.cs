@@ -47,7 +47,8 @@ namespace KLExtensions2022
                 string text = selection.Text;
                 if (!string.IsNullOrEmpty(text))
                 {
-                    selection.Text = AddInterpolatedString(text);
+                    string txt = AddInterpolatedString(text);
+                    selection.Text = txt;
                 }
             }
         }
@@ -56,7 +57,7 @@ namespace KLExtensions2022
         {
             if (!string.IsNullOrWhiteSpace(text))
             {
-                text = "$\"{" + text + "}\"";
+                text = "$\"{" + text.TrimEnd() + "}\"";
             }
             return text;
         }
